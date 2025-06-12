@@ -1,0 +1,29 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+main, router-outlet {
+  flex: 1;
+}
+
+.footer {
+  padding: 1rem 0;
+  border-top: 1px solid #989898;
+}
+.margin-left{
+    margin-left: 70px;
+}
+
+.margin-right{
+    margin-right: 70px;
+}
+.footer-line{
+    border-top: 1px solid #000000;
+    margin: 70px 0;
+}

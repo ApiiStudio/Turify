@@ -1,0 +1,76 @@
+<div class="login-wrapper">
+  <a class="navbar-brand margin-left" routerLink="/home">
+    <img class="logo" src="/imagenes/logo/Logo Positivo.png" alt="Logo Positivo" height="70">
+  </a>
+  <div class="login-card">
+    <h3 class="login-title text-center mb-4">Iniciar sesión</h3>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit($event)" class="container">
+
+      <!-- Email -->
+      <div class="mb-3" style="position: relative;" #emailContainer>
+        <label for="exampleInputEmail1" class="form-label login-label">Correo electrónico</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" formControlName="email"
+          [attr.autocomplete]="'off'" (focus)="showSuggestions = true" (blur)="hideSuggestions()"
+          (input)="onEmailInput()" />
+
+        <!-- Sugerencias personalizadas -->
+        @if (showSuggestions) {
+        <ul class="email-suggestions-list">
+          @for (suggestion of emailSuggestions; track suggestion) {
+          <li (mousedown)="applySuggestion(suggestion)">
+            {{ email?.value?.split('@')[0] || '' }}{{ suggestion }}
+          </li>
+          }
+        </ul>
+        }
+
+        <!-- Validaciones -->
+        @if (email?.touched && email?.hasError('required')) {
+        <p class="text-danger mt-1">El correo electrónico es requerido.</p>
+        }
+        @if (email?.touched && email?.hasError('email')) {
+        <p class="text-danger mt-1">El correo electrónico no es válido.</p>
+        }
+        @if (email?.touched && email?.hasError('maxlength')) {
+        <p class="text-danger mt-1">El correo electrónico no puede tener más de 100 caracteres.</p>
+        }
+        @if (email?.touched && email?.hasError('pattern')) {
+        <p class="text-danger mt-1">El correo electrónico no es válido.</p>
+        }
+      </div>
+      <!--Contraseña-->
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label register-label">Contraseña</label>
+        <div class="input-group">
+          <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="exampleInputPassword1"
+            formControlName="password" (input)="onPasswordInput()" />
+          <!--Visibilidad Contraseña-->
+          <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()" tabindex="-1">
+            <i class="fa-solid fa-eye-slash"></i>
+            <i class="bi" [attr.class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+          </button>
+        </div>
+        @if (password?.errors && password?.touched) {
+        @if (password?.hasError('required')) {
+        <p class="text-danger mt-1">La contraseña es requerida.</p>
+        }
+        }
+      </div>
+
+      <!-- Registro -->
+      <div class="mb-3 text-center">
+        <p class="login-text mb-1 d-inline">
+          ¿No tienes cuenta?
+          <a routerLink="/register" class="login-link ms-2">Registrarse</a>
+        </p>
+      </div>
+
+      <!-- Botón -->
+      <button type="submit" class="btn login-btn w-100">Iniciar sesión</button>
+
+    </form>
+  </div>
+</div>
+<!-- Footer -->
+<app-footer></app-footer>

@@ -1,0 +1,101 @@
+<!--Carrusel-->
+<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="/imagenes/inicio/SlideVuelos.png" class="d-block w-100 carrusel" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="/imagenes/inicio/SlideRent.png" class="d-block w-100 carrusel" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="/imagenes/inicio/SlidePaquetes.png" class="d-block w-100 carrusel" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<!--Buscador-->
+<div class="search-container">
+  <h2 class="search2">Encontra tu servicio</h2>
+  <div class="search-box">
+    <div class="input-group">
+      <h5>Origen</h5>
+      <div class="input-content">
+        <i class="fa-solid fa-location-dot"></i>
+        <input id="origen" type="text" placeholder="Ingresá desde dónde..." value="" />
+      </div>
+    </div>
+    <div class="swap-button" title="Cambiar origen y destino">
+      <i class="fa-solid fa-right-left"></i>
+    </div>
+    <div class="input-group">
+      <h5>Destino</h5>
+      <div class="input-content">
+        <i class="fa-solid fa-location-dot"></i>
+        <input id="destino" type="text" placeholder="Ingresá hacia dónde..." />
+      </div>
+    </div>
+    <div class="input-group">
+      <label>FECHAS</label>
+      <div class="input-content">
+        <i class="fa-solid fa-calendar-days"></i>
+        <input type="date" />
+      </div>
+      <div class="input-content">
+        <i class="fa-solid fa-calendar-days"></i>
+        <input type="date" />
+      </div>
+    </div>
+    <div class="input-group">
+      <label>HABITACIONES</label>
+      <div class="input-content">
+        <i class="fa-solid fa-bed"></i>
+        <input type="number" min="1" value="1" />
+      </div>
+      <div class="input-content">
+        <i class="fa-solid fa-user"></i>
+        <input type="number" min="1" value="2" />
+      </div>
+    </div>
+    <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+  </div>
+</div>
+<!--Servicios destacados-->
+<div class="panel">
+  <h2 class="panel-title">Servicios destacados</h2>
+  <div class="panel-content">
+    <div class="card">
+      <div class="card-body card-flex">
+        <i class="fa-solid fa-headphones card-icon"></i>
+        <div>
+          <h5 class="card-title">Atención al cliente</h5>
+          <p class="card-text">Contamos con atención personalizada para el cliente 24/7.</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body card-flex">
+        <i class="fa-solid fa-info card-icon"></i>
+        <div>
+          <h5 class="card-title">Asesoría personal</h5>
+          <p class="card-text">Ofrecemos asesoría personalizada para cada cliente.</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body card-flex">
+        <i class="fa-solid fa-bookmark card-icon"></i>
+        <div>
+          <h5 class="card-title">Reserva ahora, paga en el alojamiento</h5>
+          <p class="card-text">Cancelación GRATIS en la mayoría de las habitaciones.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

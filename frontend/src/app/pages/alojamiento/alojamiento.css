@@ -1,0 +1,141 @@
+.body{
+  margin-right: 100px;
+  margin-left: 100px;
+}
+
+.search-container {
+  background-color: #0d6efd;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 1200px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin: 30px auto;
+}
+.search-container h2 {
+  margin-bottom: 1rem;
+}
+
+.search-box {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+
+.main-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 2;
+  min-width: 260px;
+  justify-content: center;
+  height: 100%;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  color: #6b6b6b;
+  min-width: 160px;
+  flex: 1;
+}
+
+.input-content {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.input-content input {
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  width: 100%;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+.input-content input::placeholder {
+  color: #999;
+}
+
+.swap-button {
+  background-color: white;
+  padding: 0.7rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  height: fit-content;
+  margin-top: 1.5rem;
+}
+
+.search-btn {
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  cursor: pointer;
+  white-space: nowrap;
+  height: fit-content;
+  margin-top: 1.5rem;
+}
+
+.search-btn:hover {
+  background-color: #0b5ed7;
+}
+
+.search2{
+  color: #ffffff;
+}
+
+.card-title {
+  font-size: 1.25rem;
+}
+
+.card-text i {
+  margin-right: 5px;
+  color: #4b4b4b;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.info-text {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+}
+
+.info-text i {
+  margin-right: 8px;
+  color: #444;
+  min-width: 20px;
+}
+
+
+.card-title {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+

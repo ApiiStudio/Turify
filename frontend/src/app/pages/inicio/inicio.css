@@ -1,0 +1,206 @@
+body {
+    margin: 40px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+}
+.search-container {
+  background-color: #0d6efd;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 1200px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin: 30px auto;
+}
+.search-container h2 {
+  margin-bottom: 1rem;
+}
+
+.search-box {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+
+.main-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 2;
+  min-width: 260px;
+  justify-content: center;
+  height: 100%;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  color: #6b6b6b;
+  min-width: 160px;
+  flex: 1;
+}
+
+.input-content {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.input-content input {
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  width: 100%;
+  color: #1a1a1a;
+  font-weight: 500;
+}
+
+.input-content input::placeholder {
+  color: #999;
+}
+
+.swap-button {
+  background-color: white;
+  padding: 0.7rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  height: fit-content;
+  margin-top: 1.5rem;
+}
+
+.search-btn {
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  cursor: pointer;
+  white-space: nowrap;
+  height: fit-content;
+  margin-top: 1.5rem;
+}
+
+.search-btn:hover {
+  background-color: #0b5ed7;
+}
+
+.search2{
+  color: #ffffff;
+}
+
+.carrusel{
+  height: auto;
+}
+
+/* Panel principal */
+.panel {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  padding: 2rem 1.5rem;
+  margin: 2rem 0;
+  width: 100%;
+  max-width: 1200px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+/* Título del panel */
+.panel-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0d6efd;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+/* Contenedor de tarjetas */
+.panel-content {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+/* Tarjeta individual */
+.card {
+  background: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+  padding: 1.2rem 1rem;
+  min-width: 220px;
+  flex: 1 1 220px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+/* Cuerpo de la tarjeta */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin: auto;
+}
+
+/* Título de la tarjeta */
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #0d6efd;
+  margin-bottom: 0.3rem;
+}
+
+/* Texto de la tarjeta */
+.card-text {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card-flex {
+  display: flex;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  color: #0d6efd;
+  display: flex;
+  align-items: center;
+  min-width: 2.5rem;
+}

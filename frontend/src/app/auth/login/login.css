@@ -1,0 +1,104 @@
+/* Validacion */
+.ng-valid:not(form).ng-touched {
+    border: 2px solid green;
+}
+
+.ng-invalid:not(form).ng-touched {
+    border: 2px solid red;
+}
+
+/* Background */
+.login-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    background-color: #e1e3e9;
+    padding-top: 48px;
+    gap: 48px;
+}
+
+/* Logo */
+.logoLogin {
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Card */
+.login-card {
+    background-color: #fcfcfc;
+    padding: 2rem;
+    border-radius: 12px;
+
+    width: 100%;
+    max-width: 400px;
+    border: 0.5px solid #ffffff;
+}
+
+.login-title {
+    color: #000000;
+}
+
+.login-label {
+    color: #000000;
+}
+
+.login-text {
+    color: #000000;
+}
+
+.login-link {
+    color: #000000;
+    text-decoration: none;
+}
+
+.login-link:hover {
+    color: #0d6efd;
+}
+
+/*Sugerencias*/ 
+.email-suggestions-list {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    z-index: 10;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.email-suggestions-list li {
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.email-suggestions-list li:hover {
+    background: #f0f0f0;
+}
+
+/* Boton */
+.login-btn {
+    background-color: #0d6efd;
+    color: #ffffff;
+    font-weight: bold;
+    border: none;
+    height: 50px;
+
+}
+
+.login-btn:hover {
+    background-color: #0b5ed7;
+}
+
+.mi-placeholder{
+    font-style: italic;
+}

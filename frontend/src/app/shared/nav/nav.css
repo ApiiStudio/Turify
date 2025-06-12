@@ -1,0 +1,39 @@
+/* Efecto hover general para todos los nav-links */
+.navbar .nav-link {
+    transition: all 0.3s ease;
+    padding: 8px 12px;
+    border-radius: 4px;
+    color: #333;
+    align-items: center;
+    margin: 0 25px;
+}
+
+/* Hover para todos excepto el de registro */
+.navbar .nav-link:hover:not(.register-link) {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #0d6efd;
+    text-decoration: none;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover: fondo gris claro, texto azul */
+.register-item:hover .register-link {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #0d6efd !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border: 1.5px solid #0d6efd;
+}
+
+.nav-general {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centra horizontalmente los elementos */
+    width: 100%;
+}
+
+.navbar-nav {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}

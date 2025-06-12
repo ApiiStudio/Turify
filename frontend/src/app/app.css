@@ -1,0 +1,13 @@
+body{
+    margin-left: 50px;
+    margin-right: 500px;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+.margin-left{
+    margin-left: 70px;
+}
+
+.margin-right{
+    margin-right: 70px;
+}

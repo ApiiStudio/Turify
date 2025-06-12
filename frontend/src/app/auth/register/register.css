@@ -1,0 +1,106 @@
+/* Validacion */
+.ng-valid:not(form).ng-touched {
+    border: 2px solid green;
+}
+.ng-invalid:not(form).ng-touched {
+    border: 2px solid red;
+}
+/* Prioridad para el error de coincidencia */
+.is-invalid {
+    border: 2px solid #dc3545 !important;
+    box-shadow: none !important;
+}
+
+/* Background */
+.register-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    background-color: #e1e3e9;
+    padding-top: 48px;
+    gap: 48px;
+}
+
+.logoRegister {
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Card */
+.register-card {
+    background-color: #fcfcfc;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    border: 0.5px solid #ffffff;
+}
+
+.register-title {
+    color: #000000;
+}
+
+.register-label {
+    color: #000000;
+}
+
+.register-text {
+    color: #000000;
+}
+
+.register-link {
+    color: #000000;
+    text-decoration: none;
+}
+
+.register-link:hover {
+    color: #0d6efd;
+}
+
+/*Sugerencias*/
+.email-suggestions-list {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    z-index: 10;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.email-suggestions-list li {
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.email-suggestions-list li:hover {
+    background: #f0f0f0;
+}
+/* Boton */
+.register-btn {
+    background-color: #0d6efd;
+    color: #ffffff;
+    font-weight: bold;
+    border: none;
+    height: 50px;
+}
+
+.register-btn:hover {
+    background-color: #0b5ed7;
+}
+.text-muted {
+  color: gray !important;
+}
+.text-primary {
+  color: #0d6efd !important;
+}

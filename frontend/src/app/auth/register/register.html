@@ -1,0 +1,112 @@
+<div class="register-wrapper">
+    <a class="navbar-brand margin-left" routerLink="/home">
+        <img class="logo" src="/imagenes/logo/Logo Positivo.png" alt="Logo Positivo" height="70">
+    </a>
+    <div class="register-card">
+        <h3 class="register-title text-center mb-4">Crear cuenta</h3>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit($event)" class="container">
+            <!--Nombre y Apellido-->
+            <div class="mb-3">
+                <label for="exampleInputName1" class="form-label register-label">Nombre y Apellido</label>
+                <input type="text" class="form-control" id="exampleInputName1" formControlName="name" />
+                <!--Validaciones NyA-->
+                @if (name?.errors && name?.touched) {
+                @if (name?.hasError('required')) {
+                <p class="text-danger mt-1">El nombre es requerido.</p>
+                }
+                }
+                @else if (name?.hasError('minlength')) {
+                <p class="text-danger mt-1">El nombre debe tener al menos 3 caracteres.</p>
+                }
+                @else if (name?.hasError('maxlength')) {
+                <p class="text-danger mt-1">El nombre no puede tener más de 50 caracteres.</p>
+                }
+                @else if (name?.hasError('pattern')) {
+                <p class="text-danger mt-1">El nombre solo puede contener letras y espacios.</p>
+                }
+            </div>
+            <!--Email-->
+            <div class="mb-3" style="position: relative;" #emailContainer>
+                <label for="exampleInputEmail1" class="form-label login-label">Correo electrónico</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" formControlName="email"
+                    [attr.autocomplete]="'off'" (focus)="showSuggestions = true" (blur)="hideSuggestions()"
+                    (input)="onEmailInput()" />
+
+                <!--Sugerencias-->
+                @if (showSuggestions) {
+                <ul class="email-suggestions-list">
+                    @for (suggestion of emailSuggestions; track suggestion) {
+                    <li (mousedown)="applySuggestion(suggestion)">
+                        {{ email?.value?.split('@')[0] || '' }}{{ suggestion }}
+                    </li>
+                    }
+                </ul>
+                }
+
+                <!--Validaciones Email-->
+                @if (email?.touched && email?.hasError('required')) {
+                <p class="text-danger mt-1">El correo electrónico es requerido.</p>
+                }
+                @if (email?.touched && email?.hasError('email')) {
+                <p class="text-danger mt-1">El correo electrónico no es válido.</p>
+                }
+                @if (email?.touched && email?.hasError('maxlength')) {
+                <p class="text-danger mt-1">El correo electrónico no puede tener más de 100 caracteres.</p>
+                }
+                @if (email?.touched && email?.hasError('pattern')) {
+                <p class="text-danger mt-1">El correo electrónico no es válido.</p>
+                }
+            </div>
+            <!--Contraseña-->
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label register-label">Contraseña</label>
+                <div class="input-group">
+                    <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="exampleInputPassword1"
+                        formControlName="password" (input)="onPasswordInput()" />
+                        <!--Visibilidad Contraseña-->
+                    <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()"
+                        tabindex="-1">
+                        <i class="fa-solid fa-eye-slash"></i>
+                        <i class="bi" [attr.class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                    </button>
+                </div>
+                <!--Validaciones Contraseña-->
+                <ul class="password-rules list-unstyled mt-2">
+                    @for (rule of passwordRules; track rule.label) {
+                    <li [attr.class]="rule.valid ? 'text-primary' : 'text-muted'">
+                        <i class="fa-solid fa-check"></i><i class="bi bi-check-circle-fill me-1"></i> {{ rule.label }}
+                    </li>
+                    }
+                </ul>
+                @if (getPasswordError()) {
+                <p class="text-danger mt-1">{{ getPasswordError() }}</p>
+                }
+            </div>
+            <!-- Confirmar Contraseña -->
+            <div class="mb-3">
+                <label for="exampleInputConfirmPassword1" class="form-label register-label">Confirmar contraseña</label>
+                <div class="input-group">
+                    <input [type]="showPassword ? 'text' : 'password'"
+                        class="form-control @(registerForm.hasError('mismatch') ? 'is-invalid' : '')"
+                        id="exampleInputConfirmPassword1" formControlName="confirmPassword"
+                        (input)="onPasswordInput()" />
+                </div>
+                @if (confirmPassword?.errors && confirmPassword?.touched) {
+                @if (confirmPassword?.hasError('required')) {
+                <p class="text-danger mt-1">La confirmación de contraseña es requerida.</p>
+                }
+                }
+                @if (registerForm.hasError('mismatch') && (confirmPassword?.touched || password?.touched)) {
+                <p class="text-danger mt-1">Las contraseñas no coinciden.</p>
+                }
+            </div>
+            <!-- Botón -->
+            <button type="submit" class="btn register-btn w-100">Crear cuenta</button>
+        </form>
+        <div class="text-center mt-3">
+            <p class="register-text mb-1 d-inline">
+                ¿Ya tienes cuenta?
+                <a routerLink="/login" class="register-link ms-2">Iniciar sesión</a>
+            </p>
+        </div>
+    </div>

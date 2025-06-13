@@ -5,15 +5,12 @@ import { AboutUs } from './pages/aboutUs/aboutUs';
 import { Register } from './auth/register/register';
 import { Inicio } from './pages/inicio/inicio';
 import { Admin } from './auth/admin/admin';
-import { Alojamiento } from './pages/alojamiento/alojamiento';
-import { AlquilerAuto } from './pages/alquiler-auto/alquiler-auto';
-import { Excursiones } from './pages/excursiones/excursiones';
-import { PaquetesTuristicos } from './pages/paquetes-turisticos/paquetes-turisticos';
-import { Vuelos } from './pages/vuelos/vuelos';
+import { Productos } from './pages/productos/productos';
+import { Productos2Component } from './pages/productos2/productos2';
 
 
 export const routes: Routes = [
-    {path:"", redirectTo:"home", pathMatch:"full"},
+    {path:"", redirectTo:"/home/inicio", pathMatch:"full"},
     {path:"login", component:Login}, //publico
     {path:"home", component:Home,
         children:[
@@ -23,9 +20,6 @@ export const routes: Routes = [
     },
     {path:"register", component:Register}, //publico
     {path:"admin", component:Admin},
-    {path:"alojamiento", component:Alojamiento},
-    {path:"alquiler-de-auto", component:AlquilerAuto},
-    {path:"excursiones", component:Excursiones},
-    {path:"paquetes-turisticos", component:PaquetesTuristicos},
-    {path:"vuelos", component:Vuelos}
+    {path:"productos", component:Productos},
+    {path:"productos2", component:Productos2Component},
 ];

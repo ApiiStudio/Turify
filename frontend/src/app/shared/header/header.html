@@ -1,7 +1,7 @@
 <!--Header-->
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand margin-left" routerLink="/home">
+        <a class="navbar-brand margin-left" routerLink="/home/inicio">
             <img class="logo" src="/imagenes/logo/Logo Positivo.png" alt="Logo Positivo" height="50">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -21,18 +21,46 @@
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                @if (userLoginOn) {
                 <li class="nav-item register-item">
-                    <a class="nav-link cart-link ms-2 " routerLink="#">
+                    <a class="nav-link cart-link ms-2">
                         <i class="fa-solid fa-cart-shopping"></i>
                     </a>
                 </li>
+                <!--Cuenta-->
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav ms auto">
+                        <li class="nav-item dropdown">
+                            <a href="#" data-bs-toggle="dropdown" class="nav-link register-link cart-link ms-2 ">
+                                <i class="fa-solid fa-user"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end rounded-0 border-0 shadow mt-3">
+                                <a href="#" class="dropdown-item">
+                                    <i class="fa-solid fa-life-ring"></i>
+                                    <span>Ayuda</span>
+                                </a>
+                                <a href="#" class="dropdown-item" (click)="logout()">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                    <span>Salir</span>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                }
+                @if (!userLoginOn) {
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/login">Iniciar Sesión</a>
                 </li>
                 <li class="nav-item register-item margin-right">
                     <a class="nav-link register-link ms-2 " routerLink="/register">Registrarse</a>
                 </li>
+                }
             </ul>
         </div>
     </div>
 </nav>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+    crossorigin="anonymous"></script>

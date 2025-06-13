@@ -1,0 +1,63 @@
+<app-header></app-header>
+<div class="contenedor-productos">
+  <h2>Explorá nuestras categorías</h2>
+
+  <div class="categorias">
+    @for (cat of categorias; track cat) {
+      <button
+        (click)="seleccionarCategoria(cat)"
+        [class.activa]="cat === categoriaSeleccionada">
+        {{ cat | titlecase }}
+      </button>
+    }
+  </div>
+
+  <div class="lista-productos col-12">
+  @for (producto of productosFiltrados; track producto.id) {
+    <!--Buscador-->
+    <div class="search-container ">
+        <h2 class="search2">Encontra donde quedarte</h2>
+        <div class="search-box">
+            <div class="input-group">
+                <h5>Destino</h5>
+                <div class="input-content">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <input id="origen" type="text" placeholder="Ingresá dónde te vas a quedar..." value="" />
+                </div>
+                <span>Al menos ingresa 3 letras</span>
+            </div>
+            <div class="input-group">
+                <h5>Fechas</h5>
+                <div class="input-content">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <input type="date" />
+                </div>
+                <div class="input-content">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <input type="date" />
+                </div>
+            </div>
+            <div class="input-group">
+                <h5>Habitaciones</h5>
+                <div class="input-content">
+                    <i class="fa-solid fa-bed"></i>
+                    <input type="number" min="1" value="1" />
+                </div>
+                <div class="input-content">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="number" min="1" value="2" />
+                </div>
+            </div>
+            <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+        </div>
+    </div>
+
+    <div class="producto-card">
+      <h3>{{ producto.nombre }}</h3>
+      <p>{{ producto.descripcion }}</p>
+      <p class="precio">$ {{ producto.precio }}</p>
+    </div>
+  }
+</div>
+</div>
+<app-footer></app-footer>

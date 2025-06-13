@@ -49,3 +49,20 @@
 .margin-right{
     margin-right: 70px;
 }
+
+.navbar-collapse {
+    min-width: 100px;
+}
+
+#sidebar:not(.expand) .sidebar-link[data-bs-toggle="collapse"]::after {
+    display: none;
+}
+
+.navbar-expand .navbar-nav .dropdown-menu{
+    box-shadow: 0.1rem .2rem rgba(0, 0, 0,.05);
+}
+
+.dropdown-item i{
+    font-size: 1.1rem;
+    margin-right: .75rem;
+}

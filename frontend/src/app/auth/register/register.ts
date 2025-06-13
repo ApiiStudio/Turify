@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, OnDestroy, ElementRef, ViewChild, } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthLogin } from '../../services/auth-login';
+import { LoginRequest } from '../../services/loginRequest';
 
 @Component({
   selector: 'app-register',
@@ -9,18 +11,22 @@ import { RouterLink } from '@angular/router';
   styleUrl: './register.css'
 })
 export class Register implements AfterViewInit, OnDestroy{
+  loginError:string="";
   registerForm: FormGroup;
   showSuggestions = false;
   emailSuggestions = ['@gmail.com', '@outlook.com', '@hotmail.com', '@yahoo.com', '@icloud.com'];
-  constructor(private formBuilder: FormBuilder) {
+  
+  constructor(private formBuilder: FormBuilder, private authLogin:AuthLogin, private router:Router) {
     this.registerForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, this.passwordComplexityValidator]],
       confirmPassword: ['', Validators.required]
-    }, { validators: this.passwordMatchValidator });
+    }, { validators: this.passwordMatchValidator
+    });
   }
 
+  
   // Validador para la contraseña
   passwordComplexityValidator(control: any) {
     const value = control.value || '';
@@ -67,6 +73,26 @@ export class Register implements AfterViewInit, OnDestroy{
   get confirmPassword() {
     return this.registerForm.get('confirmPassword');
   }
+    login(){
+      if(this.registerForm.valid){
+        this.authLogin.login(this.registerForm.value as LoginRequest).subscribe({
+          next: (userData) => {
+            console.log("datos del servio")
+            console.log(userData);
+          },
+          error: (errorData) => {
+            console.error(errorData);
+            this.loginError=errorData;
+          },
+          complete: () => {
+            console.info("Login está completo"); 
+                  this.router.navigateByUrl('/home/inicio');
+        this.registerForm.reset();
+          }
+        })
+      }
+    }
+  
   // Validador coincidencia de contraseñas
   passwordMatchValidator(formGroup: FormGroup) {
     return formGroup.get('password')?.value === formGroup.get('confirmPassword')?.value ? null : { mismatch: true };

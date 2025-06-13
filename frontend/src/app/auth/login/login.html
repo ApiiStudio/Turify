@@ -1,12 +1,11 @@
 <div class="login-wrapper">
-  <a class="navbar-brand margin-left" routerLink="/home">
+  <a class="navbar-brand margin-left" routerLink="/home/inicio">
     <img class="logo" src="/imagenes/logo/Logo Positivo.png" alt="Logo Positivo" height="70">
   </a>
   <div class="login-card">
     <h3 class="login-title text-center mb-4">Iniciar sesión</h3>
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit($event)" class="container">
-
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="container">
       <!-- Email -->
       <div class="mb-3" style="position: relative;" #emailContainer>
         <label for="exampleInputEmail1" class="form-label login-label">Correo electrónico</label>
@@ -44,7 +43,7 @@
         <label for="exampleInputPassword1" class="form-label register-label">Contraseña</label>
         <div class="input-group">
           <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="exampleInputPassword1"
-            formControlName="password" (input)="onPasswordInput()" />
+            formControlName="password" [attr.autocomplete]="'off'" (input)="onPasswordInput()" />
           <!--Visibilidad Contraseña-->
           <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()" tabindex="-1">
             <i class="fa-solid fa-eye-slash"></i>
@@ -57,7 +56,7 @@
         }
         }
       </div>
-
+<p class="text-danger">{{loginError}}</p>
       <!-- Registro -->
       <div class="mb-3 text-center">
         <p class="login-text mb-1 d-inline">
@@ -68,7 +67,6 @@
 
       <!-- Botón -->
       <button type="submit" class="btn login-btn w-100">Iniciar sesión</button>
-
     </form>
   </div>
 </div>

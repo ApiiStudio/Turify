@@ -3,9 +3,9 @@ import { Injectable,  } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class AlojamientoService {
+export class ProductoService {
 
-  private productosHotel = [
+  private productos = [
   {
     nombre: 'Hotel Luna',
     noches: 2,
@@ -37,6 +37,6 @@ export class AlojamientoService {
   ];
 
   getProductoAlojamiento(){
-    return this.productosHotel;
+    return this.productos;
   }
 }

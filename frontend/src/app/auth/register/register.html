@@ -7,7 +7,7 @@
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit($event)" class="container">
             <!--Nombre y Apellido-->
             <div class="mb-3">
-                <label for="exampleInputName1" class="form-label register-label">Nombre y Apellido</label>
+                <label for="exampleInputName1" class="form-label register-label">Nombre</label>
                 <input type="text" class="form-control" id="exampleInputName1" formControlName="name" />
                 <!--Validaciones NyA-->
                 @if (name?.errors && name?.touched) {
@@ -23,6 +23,25 @@
                 }
                 @else if (name?.hasError('pattern')) {
                 <p class="text-danger mt-1">El nombre solo puede contener letras y espacios.</p>
+                }
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputsurName1" class="form-label register-label">Apellido</label>
+                <input type="text" class="form-control" id="exampleInputsurName1" formControlSurName="surname" />
+                <!--Validaciones NyA-->
+                @if (surname?.errors && surname?.touched) {
+                @if (surname?.hasError('required')) {
+                <p class="text-danger mt-1">El apellido es requerido.</p>
+                }
+                }
+                @else if (surname?.hasError('minlength')) {
+                <p class="text-danger mt-1">El apellido debe tener al menos 3 caracteres.</p>
+                }
+                @else if (surname?.hasError('maxlength')) {
+                <p class="text-danger mt-1">El apellido no puede tener más de 50 caracteres.</p>
+                }
+                @else if (surname?.hasError('pattern')) {
+                <p class="text-danger mt-1">El apellido solo puede contener letras y espacios.</p>
                 }
             </div>
             <!--Email-->
@@ -110,3 +129,5 @@
             </p>
         </div>
     </div>
+</div>
+<app-footer></app-footer>

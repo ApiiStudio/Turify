@@ -1,1 +1,97 @@
-<p>cart works!</p>
+<app-header></app-header>
+<app-nav></app-nav>
+<div class="container-fluid mt-3">
+    <h5>Mi Carrito</h5>
+    <hr>
+
+    <div class="row">
+        <div class="col-sm-9">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped text-center">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Categoria</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>
+                                    <th>Importe</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for(item of listCarrito; track item.producto){
+                                <tr>
+                                    <td>{{item.producto.nombre}}</td>
+                                    <td>{{item.producto.categoria}}</td>
+                                    <td>${{(item.producto.precio)}}</td>
+                                    <td>
+                                        <input type="number" class="form-control" [(ngModel)]="item.cantidad" min="1"
+                                            (change)="actualizar(item, $index)" (keydown)="onKeyDown($event)">
+                                    </td>
+                                    <td>${{(item.producto.precio * item.cantidad)}}</td>
+                                    <td>
+                                        <button (click)="eliminarItem($index)" type="button"
+                                            class="btn btn-danger btn-sm">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                }
+
+                                @if (listCarrito.length == 0) {
+                                <tr>
+                                    <td colspan="6" class="text-center">No hay productos.</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <h5>Resumen de Compra</h5>
+                        <hr>
+                        <div class="mt-4">
+                            <div class="d-flex justify-content-between mb-2">
+                                <p class="mb-0">Sub Total:</p>
+                                <p class="mb-0">${{ carritoService.total() }}</p>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2 text-success">
+                                <p class="mb-0">Descuentos:</p>
+                                <p class="mb-0">$0</p>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <p class="mb-0">Impuestos (21%):</p>
+                                <p class="mb-0">${{ carritoService.impuestos() }}</p>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between mb-2 fw-bold">
+                                <p class="mb-0">Total:</p>
+                                <p class="mb-0">${{ carritoService.totalConImpuestos() }}</p>
+                            </div>
+                        </div>
+                        <button (click)="procesarPago()" [disabled]="listCarrito.length == 0" type="button"
+                            class="btn btn-dark btn-block btn-lg">
+                            <div class="d-flex justify-content-between">
+                                <span>Procesar pago</span>
+                            </div>
+                        </button>
+                        <div class="mb-3 text-center">
+                            <p class="login-text mb-1 d-inline">
+                                o
+                                <a routerLink="/productos2" class="login-link ms-2">seguir comprando</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

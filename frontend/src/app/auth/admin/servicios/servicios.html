@@ -1,3 +1,5 @@
+<app-header></app-header>
+<app-nav></app-nav>
 <div class="wrapper">
     <aside id="sidebar">
         <div class="d-flex justify-content-between p-4">
@@ -43,7 +45,7 @@
                 </ul>
             </li>
             <li class="sidebar-item">
-                <a routerLink="/servicios" class="sidebar-link" aria-expanded="false">
+                <a routerLink="/admin/servicios" class="sidebar-link" aria-expanded="false">
                     <i class="fa-solid fa-bar-chart"></i>
                     <span>Servicios</span>
                 </a>
@@ -107,13 +109,13 @@
         <main class="content px-3 py-4">
             <div class="container-fluid">
                 <div class="mb-3">
-                    <h3 class="fw-bold fs-4 mb-3">Admin Dashboard</h3>
+                    <h3 class="fw-bold fs-4 mb-3">Servicios Dashboard</h3>
                     <div class="row">
                         <div class="col-12 col-md-4">
                             <div class="card shadow">
                                 <div class="card-body py-4">
                                     <h6 class="mb-2 fw-bold">
-                                        Member Progress
+                                        Ganancias Totales
                                     </h6>
                                     <p class="fw-bold mb-2">
                                         $100,000
@@ -123,7 +125,7 @@
                                             +9.0%
                                         </span>
                                         <span class="fw-bold">
-                                            Since Last Month
+                                            Desde el Mes Pasado
                                         </span>
                                     </div>
                                 </div>
@@ -133,7 +135,7 @@
                             <div class="card shadow">
                                 <div class="card-body py-4">
                                     <h6 class="mb-2 fw-bold">
-                                        Member Progress
+                                        Ganancias Totales
                                     </h6>
                                     <p class="fw-bold mb-2">
                                         $100,000
@@ -143,7 +145,7 @@
                                             +9.0%
                                         </span>
                                         <span class="fw-bold">
-                                            Since Last Month
+                                            Desde el Trimestre Pasado
                                         </span>
                                     </div>
                                 </div>
@@ -153,7 +155,7 @@
                             <div class="card shadow">
                                 <div class="card-body py-4">
                                     <h6 class="mb-2 fw-bold">
-                                        Member Progress
+                                        Ganancias Totales
                                     </h6>
                                     <p class="fw-bold mb-2">
                                         $100,000
@@ -163,79 +165,150 @@
                                             +9.0%
                                         </span>
                                         <span class="fw-bold">
-                                            Since Last Month
+                                            Desde el Año Pasado
                                         </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12 col-md-12">
-                            <h3 class="fw-bold fs-4 my-3">Usuarios Autorizados</h3>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr class="highlight">
-                                        <th scope="col-2">#</th>
-                                        <th scope="col-2">Nombre</th>
-                                        <th scope="col-2">Apellido</th>
-                                        <th scope="col-2">Email</th>
-                                        <th scope="col-2">Contraseña</th>
-                                        <th scope="col-2">Rol</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let usuario of usuarios; let i = index">
-                                        <th scope="row">{{ usuario.id }}</th>
-                                        <td>{{ usuario.nombre }}</td>
-                                        <td>{{ usuario.apellido }}</td>
-                                        <td>{{ usuario.correo }}</td>
-                                        <td>{{ usuario.password }}</td>
-                                        <td>{{ usuario.rol }}</td>
-                                    </tr>
-
-                                    <!-- Fila del formulario para agregar nuevo usuario -->
-                                    <tr *ngIf="mostrarFormulario" class="bg-light align-middle">
-                                        <td class="fw-bold text-muted">Auto</td>
-                                        <td><input type="text" [(ngModel)]="nuevoUsuario.nombre"
-                                                class="form-control form-control-sm mi-placeholder" placeholder="Ej: Mario" /></td>
-                                        <td><input type="text" [(ngModel)]="nuevoUsuario.apellido"
-                                                class="form-control form-control-sm mi-placeholder" placeholder="Ej: Hernandez" /></td>
-                                        <td><input type="email" [(ngModel)]="nuevoUsuario.correo"
-                                                class="form-control form-control-sm mi-placeholder" placeholder="ejemplo@ejemplo.com" /></td>
-                                        <td><input type="text" [(ngModel)]="nuevoUsuario.password"
-                                                class="form-control form-control-sm mi-placeholder" placeholder="Ingrese contraseña..."/></td>
-                                        <td>
-                                            <select [(ngModel)]="nuevoUsuario.rol" class="form-select form-select-sm">
-                                                <option disabled value="">Seleccione rol</option>
-                                                <option value="Admin">Admin</option>
-                                                <option value="Jefe de Ventas">Jefe de Ventas</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex gap-2">
-                                                <button (click)="agregarUsuario()"
-                                                    class="btn btn-success btn-sm">Guardar</button>
-                                                <button (click)="cancelarAgregar()"
-                                                    class="btn btn-outline-secondary btn-sm">Cancelar</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                <div class="d-flex justify-content-end mb-3">
-                                    <button (click)="mostrarFormulario = true" class="btn">
-                                        <i class="fa-solid fa-user-plus"></i>
-                                        <span>Agregar usuario</span>
-                                    </button>
+                    <div class="card mt-4">
+                        <div class="card-header fw-bold">Agregar / Editar Servicio</div>
+                        <div class="card-body">
+                            <form (ngSubmit)="guardarServicio()" class="row g-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">Tipo de Servicio</label>
+                                    <select class="form-select" [(ngModel)]="nuevoServicio.tipo" name="tipo" required>
+                                        <option value="" disabled selected>Seleccionar...</option>
+                                        <option value="paquete">Paquete</option>
+                                        <option value="alojamiento">Alojamiento</option>
+                                        <option value="vuelo">Vuelo</option>
+                                        <option value="auto">Auto</option>
+                                        <option value="excursion">Excursiones</option>
+                                    </select>
                                 </div>
-                            </table>
+                                <div class="col-md-4">
+                                    <label class="form-label">Nombre</label>
+                                    <input class="form-control" [(ngModel)]="nuevoServicio.nombre" name="nombre"
+                                        required />
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Precio</label>
+                                    <input type="number" class="form-control" [(ngModel)]="nuevoServicio.precio"
+                                        name="precio" required />
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Descripción</label>
+                                    <textarea class="form-control" rows="2" [(ngModel)]="nuevoServicio.descripcion"
+                                        name="descripcion"></textarea>
+                                </div>
+                                <!-- Campos dinámicos -->
+                                <ng-container
+                                    *ngIf="nuevoServicio.tipo === 'paquete' || nuevoServicio.tipo === 'alojamiento'">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Noches</label>
+                                        <input type="number" class="form-control" [(ngModel)]="nuevoServicio.noches"
+                                            name="noches" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Personas</label>
+                                        <input type="number" class="form-control" [(ngModel)]="nuevoServicio.personas"
+                                            name="personas" />
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="nuevoServicio.tipo === 'vuelo'">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Duración</label>
+                                        <input type="text" class="form-control" [(ngModel)]="nuevoServicio.duracion"
+                                            name="duracion" />
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="form-label">Clase</label>
+                                        <select class="form-select" [(ngModel)]="nuevoServicio.clase" name="clase"
+                                            required>
+                                            <option value="" disabled selected>Seleccionar...</option>
+                                            <option value="Turista">Turista</option>
+                                            <option value="Primera Clase">Primera Clase</option>
+                                        </select>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="nuevoServicio.tipo === 'auto'">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Días</label>
+                                        <input type="number" class="form-control" [(ngModel)]="nuevoServicio.dias"
+                                            name="dias" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Gama</label>
+                                        <select class="form-select" [(ngModel)]="nuevoServicio.gama" name="gama"
+                                            required>
+                                            <option value="" disabled selected>Seleccionar...</option>
+                                            <option value="Media">Media</option>
+                                            <option value="Alta">Alta</option>
+                                        </select>
+                                    </div>
+                                </ng-container>
+                                <div class="col-12">
+                                    <button class="btn btn-primary">
+                                        {{ editandoIndex !== null ? 'Actualizar' : 'Agregar' }}
+                                    </button>
+                                    <button type="button" class="btn btn-secondary ms-2"
+                                        (click)="resetForm()">Cancelar</button>
+                                </div>
+                            </form>
                         </div>
+                    </div>
+                    <!-- Tabla de Producto -->
+
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <label for="categoriaSelect" class="form-label mb-0"><strong>Filtrar por
+                                categoría:</strong></label>
+                        <select class="form-select w-auto" [formControl]="categoriaControl" id="categoriaSelect">
+                            <option value="">Todas</option>
+                            <option *ngFor="let cat of categoriasDisponibles" [value]="cat">{{ cat }}</option>
+                        </select>
+                    </div>
+
+                    <div class="card-body table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tipo</th>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Descripción</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let prod of serviciosFiltrados; trackBy: trackById">
+                                    <td>{{ prod.id }}</td>
+                                    <td>{{ prod.categoria }}</td>
+                                    <td>{{ prod.nombre }}</td>
+                                    <td>$ {{ prod.precio }}</td>
+                                    <td>{{ prod.descripcion }}</td>
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-outline-primary me-2"
+                                            (click)="editarServicio(prod.id)">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger"
+                                            (click)="eliminarServicio(prod.id)">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
                     </div>
                 </div>
             </div>
         </main>
         <footer class="footer">
-            <div class="cointainer-fluid">
+            <div class="container-fluid">
                 <div class="row text-body-secondary">
                     <div class="col-6 text-start">
                         <a routerLink="/home/inicio" class="text-body-secondary">

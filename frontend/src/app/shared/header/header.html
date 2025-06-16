@@ -20,11 +20,13 @@
                     <a class="nav-link" routerLink="/admin">admin</a>
                 </li>
             </ul>
+            <!--Carrito-->
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 @if (userLoginOn) {
                 <li class="nav-item register-item">
-                    <a class="nav-link cart-link ms-2">
+                    <a class="nav-link cart-link ms-2" routerLink="/carrito">
                         <i class="fa-solid fa-cart-shopping"></i>
+                        (<span>{{carritoService.cantidad()}}</span>)
                     </a>
                 </li>
                 <!--Cuenta-->
@@ -39,6 +41,7 @@
                                     <i class="fa-solid fa-life-ring"></i>
                                     <span>Ayuda</span>
                                 </a>
+                                <hr>
                                 <a href="#" class="dropdown-item" (click)="logout()">
                                     <i class="fa-solid fa-right-from-bracket"></i>
                                     <span>Salir</span>

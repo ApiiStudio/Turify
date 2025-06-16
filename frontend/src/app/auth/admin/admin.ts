@@ -8,7 +8,7 @@ import { AdminNavbar } from '../../shared/admin-navbar/admin-navbar/admin-navbar
 
 @Component({
   selector: 'app-admin',
-  imports: [Footer, Header, Nav, AdminNavbar],
+  imports: [Header, Nav, AdminNavbar],
   templateUrl: './admin.html',
   styleUrls: ['./admin.css']
 })

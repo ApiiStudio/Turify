@@ -2,10 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, AfterViewInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { Servicios } from '../../../auth/admin/servicios/servicios';
 
 @Component({
   selector: 'app-admin-navbar',
-  imports: [RouterLink, FormsModule, CommonModule, ],
+  imports: [RouterLink, FormsModule, CommonModule,],
   templateUrl: './admin-navbar.html',
   styleUrl: './admin-navbar.css'
 })

@@ -1,63 +1,72 @@
 <app-header></app-header>
-<div class="contenedor-productos">
-  <h2>Explorá nuestras categorías</h2>
-
+<div class="body">
   <div class="categorias">
     @for (cat of categorias; track cat) {
-      <button
-        (click)="seleccionarCategoria(cat)"
-        [class.activa]="cat === categoriaSeleccionada">
-        {{ cat | titlecase }}
-      </button>
+    <button (click)="seleccionarCategoria(cat)" [class.activa]="cat === categoriaSeleccionada">
+      {{ cat | titlecase }}
+    </button>
     }
   </div>
+  <div class="contenedor-cards">
+      <!--@for (producto of productosFiltrados; track producto.id) {-->
+        <div class="producto-card" *ngFor="let producto of productosFiltrados; trackBy: trackById">
+          <div class="card-producto d-flex flex-column justify-content-between">
+            <h5 class="card-title">{{ producto.nombre }}</h5>
 
-  <div class="lista-productos col-12">
-  @for (producto of productosFiltrados; track producto.id) {
-    <!--Buscador-->
-    <div class="search-container ">
-        <h2 class="search2">Encontra donde quedarte</h2>
-        <div class="search-box">
-            <div class="input-group">
-                <h5>Destino</h5>
-                <div class="input-content">
-                    <i class="fa-solid fa-location-dot"></i>
-                    <input id="origen" type="text" placeholder="Ingresá dónde te vas a quedar..." value="" />
-                </div>
-                <span>Al menos ingresa 3 letras</span>
+            <div class="info-text">
+              <i class="fa-solid fa-list"></i>
+              <span>Categoria: {{ producto.categoria }}</span>
             </div>
-            <div class="input-group">
-                <h5>Fechas</h5>
-                <div class="input-content">
-                    <i class="fa-solid fa-calendar-days"></i>
-                    <input type="date" />
-                </div>
-                <div class="input-content">
-                    <i class="fa-solid fa-calendar-days"></i>
-                    <input type="date" />
-                </div>
+
+            <div class="info-text">
+              <i class="fa-solid fa-circle-info"></i>
+              <span>Descripcion: {{ producto.descripcion }}</span>
             </div>
-            <div class="input-group">
-                <h5>Habitaciones</h5>
-                <div class="input-content">
-                    <i class="fa-solid fa-bed"></i>
-                    <input type="number" min="1" value="1" />
-                </div>
-                <div class="input-content">
-                    <i class="fa-solid fa-user"></i>
-                    <input type="number" min="1" value="2" />
-                </div>
+
+            @if (producto.categoria === 'paquete'){
+            <div class="info-text">
+              <i class="fa fa-moon"></i><span>Noches: {{ producto.noches }}</span>
             </div>
-            <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
+            <div class="info-text">
+              <i class="fa-solid fa-users"></i><span>Personas: {{ producto.personas }}</span>
+            </div>
+            }
+            @if (producto.categoria === 'vuelo'){
+            <div class="info-text">
+              <i class="fa-solid fa-clock"></i><span>Duración: {{ producto.duracion }}</span>
+            </div>
+            <div class="info-text">
+              <i class="fa-solid fa-star"></i><span>Clase: {{ producto.clase }}</span>
+            </div>
+            }
+            @if (producto.categoria === 'alojamiento'){
+            <div class="info-text">
+              <i class="fa fa-moon"></i><span>Noches: {{ producto.noches }}</span>
+            </div>
+            <div class="info-text">
+              <i class="fa-solid fa-users"></i><span>Personas: {{ producto.personas }}</span>
+            </div>
+            }
+            @if (producto.categoria === 'auto'){
+            <div class="info-text">
+              <i class="fa-solid fa-star"></i><span>Gama: {{ producto.gama }}</span>
+            </div>
+            <div class="info-text">
+              <i class="fa-solid fa-calendar-days"></i><span>Días: {{ producto.dias }}</span>
+            </div>
+            }
+            <div class="info-text">
+              <i class="fa fa-dollar-sign"></i>
+              <span>Precio: ${{ producto.precio }}</span>
+            </div>
+            @if (userLoginOn) {
+            <button href="#" (click)="agregarProducto(producto)" class="btn btn-primary mt-3">
+              <i class="fa fa-plus"></i> Agregar al Carrito
+            </button>
+            }
+          </div>
         </div>
+      </div>
+      <!--}-->
     </div>
-
-    <div class="producto-card">
-      <h3>{{ producto.nombre }}</h3>
-      <p>{{ producto.descripcion }}</p>
-      <p class="precio">$ {{ producto.precio }}</p>
-    </div>
-  }
-</div>
-</div>
-<app-footer></app-footer>
+  <app-footer></app-footer>

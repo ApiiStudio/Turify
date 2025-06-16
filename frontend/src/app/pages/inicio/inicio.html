@@ -21,11 +21,6 @@
   </button>
 </div>
 <div>
-  @if (userLoginOn) {
-  <p>Nombre: {{userData?.name}}</p>
-  <p>Apellido: {{userData?.lastName}}</p>
-  <p>Email: {{userData?.email}}</p>
-  }
 </div>
 <!--Buscador-->
 <div class="search-container">
@@ -101,6 +96,33 @@
         <div>
           <h5 class="card-title">Reserva ahora, paga en el alojamiento</h5>
           <p class="card-text">Cancelación GRATIS en la mayoría de las habitaciones.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Ofertas destacadas</h2>
+    <button class="btn btn-outline-primary" (click)="prev()">←</button>
+    <button class="btn btn-outline-primary" (click)="next()">→</button>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4" *ngFor="let producto of productosVisibles">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ producto.nombre }}</h5>
+          <p class="card-text">{{ producto.categoria }}</p>
+          <p class="card-text">{{ producto.descripcion }}</p>
+          <p class="card-text"><strong>${{ producto.precio }}</strong></p>
+          <a
+            class="btn btn-primary"
+            [routerLink]="['/productos2']"
+            [queryParams]="{ categoria: producto.categoria }"
+          >
+            Ver más
+          </a>
         </div>
       </div>
     </div>

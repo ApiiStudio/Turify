@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { AuthLogin } from '../../services/auth-login';
 import { User } from '../../services/user';
+import { CarritoService } from '../../services/carrito-service';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,11 @@ import { User } from '../../services/user';
 export class Header implements OnInit{
   userData?: User;
   userLoginOn:boolean=false;
-  constructor(private AuthLogin:AuthLogin, private router: Router) {}
+  constructor(
+    private AuthLogin:AuthLogin,
+    private router: Router,
+    public carritoService: CarritoService,
+  ){}
 
   ngOnInit(): void {
     this.AuthLogin.currentUserLoginOn.subscribe({

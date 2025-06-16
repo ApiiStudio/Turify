@@ -40,8 +40,11 @@ get userLoginOn():Observable<boolean>{
   return this.currentUserLoginOn.asObservable();
 };
 
-logout(){
-  localStorage.clear();
+logout(): void {
+  localStorage.removeItem('userData');
+  localStorage.removeItem('userLoginOn');
+  this.currentUserData.next({ id: 0, email: '' });
+  this.currentUserLoginOn.next(false);
 }
 }
 

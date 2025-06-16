@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { AuthLogin } from '../../services/auth-login';
 import { LoginRequest } from '../../services/loginRequest';
+import { Footer } from '../../shared/footer/footer';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, RouterLink, ],
+  imports: [ReactiveFormsModule, RouterLink, Footer ],
   templateUrl: './register.html',
   styleUrl: './register.css'
 })
@@ -19,6 +20,7 @@ export class Register implements AfterViewInit, OnDestroy{
   constructor(private formBuilder: FormBuilder, private authLogin:AuthLogin, private router:Router) {
     this.registerForm = this.formBuilder.group({
       name: ['', Validators.required],
+      surname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, this.passwordComplexityValidator]],
       confirmPassword: ['', Validators.required]
@@ -63,6 +65,9 @@ export class Register implements AfterViewInit, OnDestroy{
   // Métodos para obtener los controles del formulario
   get name() {
     return this.registerForm.get('name');
+  }
+  get surname(){
+    return this.registerForm.get('surname')
   }
   get email() {
     return this.registerForm.get('email');

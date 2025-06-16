@@ -38,6 +38,9 @@ export class Login implements AfterViewInit, OnDestroy {
         next: (userData) => {
           console.log("datos del servio")
           console.log(userData);
+
+          localStorage.setItem('userData', JSON.stringify(userData));
+          localStorage.setItem('userLoginOn', 'true');
         },
         error: (errorData) => {
           console.error(errorData);

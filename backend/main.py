@@ -66,3 +66,10 @@ def add_to_cart(item: schemas.CartItemCreate, db: Session = Depends(get_db)):
 def remove_from_cart(user_id: int, product_id: int, db: Session = Depends(get_db)):
     crud.remove_item(db, user_id, product_id)
     return {"msg": "Se eliminó el producto del carrito"}
+
+@app.post("/pedidos/", response_model=schemas.PedidoCabecera)
+def create_pedido(
+    pedido: schemas.PedidoCabeceraCreate,
+    db: Session = Depends(get_db)
+):
+    return crud.create_pedido(db, pedido)

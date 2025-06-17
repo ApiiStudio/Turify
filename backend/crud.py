@@ -4,6 +4,7 @@ from schemas import UserCreate
 from passlib.context import CryptContext
 from models import CartItem
 from schemas import CartItemCreate
+from schemas import PedidoCabeceraCreate
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -39,3 +40,9 @@ def remove_item(db: Session, user_id: int, product_id: int):
         db.delete(item)
         db.commit()
 
+def create_pedido(db: Session, pedido: PedidoCabeceraCreate):
+    db_pedido = PedidoCabecera(**pedido.dict())
+    db.add(db_pedido)
+    db.commit()
+    db.refresh(db_pedido)
+    return db_pedido

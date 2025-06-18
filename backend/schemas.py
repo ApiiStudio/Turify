@@ -1,9 +1,10 @@
 from pydantic import BaseModel
 from datetime import date
+from typing import List
 
 class UserCreate(BaseModel):
-    nombre: str
-    apellido: str
+    name: str
+    lastname: str
     email: str
     password: str
 
@@ -30,17 +31,70 @@ class CartItemOut(CartItemBase):
         orm_mode = True
 
 class PedidoCabeceraCreate(BaseModel):
-    cliente: str
-    fecha_pedido: date
-    forma_pago: str = None
-    moneda: str = None
-    total: float = None
+    user_id: int
+    servicio_id: int
+    numero_pedido: str
+    monto_total: float
+    estado: str = "pendiente"
+    fecha_creacion: date
+    direccion_entrega: str
+    email_usuario: str
+
+    class Config:
+        from_attributes = True 
+
+class PedidoCabecera(PedidoCabeceraCreate):
+    id: int
+
+    class Config:
+        orm_mode = True
+class DetalleDePedidoCreate(BaseModel):
+    pedido_id: int
+    servicio_id: int
+    cantidad: int
+    importe: float
+    fecha_creacion: str
 
     class Config:
         orm_mode = True
 
-class PedidoCabecera(PedidoCabeceraCreate):
-    idPedido: int
+class DetalleDePedidoOut(DetalleDePedidoCreate):
+    id: int
+
+class PedidoEstadoUpdate(BaseModel):
+    id: int
+    nuevo_estado: str
+
+class ServicioCreate(BaseModel):
+    nombre: str
+    categoria: str
+    descripcion: str = None
+    precio: int
+    noches: int = None
+    personas: int = None
+    duracion: int = None
+    clase: str = None
+    dias: str = None
+    gama: str = None
+
+    class Config:
+        orm_mode = True
+
+class ServicioOut(ServicioCreate):
+    id: int
+
+class ServicioOut(BaseModel):
+    id: int
+    nombre: str
+    categoria: str
+    descripcion: str = None
+    precio: int
+    noches: int = None
+    personas: int = None
+    duracion: int = None
+    clase: str = None
+    dias: str = None
+    gama: str = None
 
     class Config:
         orm_mode = True

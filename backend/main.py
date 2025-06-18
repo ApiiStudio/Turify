@@ -5,6 +5,10 @@ from fastapi import APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 from database import get_db
+from schemas import DetalleDePedidoCreate, DetalleDePedidoOut
+from typing import List
+from schemas import ServicioCreate, ServicioOut
+from typing import List
 
 app = FastAPI()
 
@@ -32,8 +36,8 @@ def signup(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
     # Crear nuevo usuario
     nuevo_usuario = models.User(
-        nombre=user.nombre,
-        apellido=user.apellido,
+        name=user.name,
+        lastname=user.lastname,
         email=user.email,
         password=user.password 
     )
@@ -73,3 +77,26 @@ def create_pedido(
     db: Session = Depends(get_db)
 ):
     return crud.create_pedido(db, pedido)
+@app.post("/pedidos/detalle", response_model=List[DetalleDePedidoOut])
+def crear_detalle(detalles: List[DetalleDePedidoCreate], db: Session = Depends(get_db)):
+    return crud.crear_detalle_de_pedido(db, detalles)
+from schemas import PedidoEstadoUpdate
+from fastapi import Body
+
+@app.put("/pedidos/estado")
+def cambiar_estado_pedido(update: PedidoEstadoUpdate, db: Session = Depends(get_db)):
+    pedido_actualizado = crud.actualizar_estado_pedido(db, update.id, update.nuevo_estado)
+    if not pedido_actualizado:
+        raise HTTPException(status_code=404, detail="Pedido no encontrado")
+    return {"msg": "Estado actualizado correctamente", "nuevo_estado": pedido_actualizado.estado}
+
+@app.post("/servicios/", response_model=ServicioOut)
+def crear_servicio(servicio: ServicioCreate, db: Session = Depends(get_db)):
+    return crud.crear_servicio(db, servicio)
+
+@app.get("/servicios/filtrar", response_model=List[schemas.ServicioOut])
+def filtrar_por_categoria(categoria: str, db: Session = Depends(get_db)):
+    servicios = crud.filtrar_servicios_por_categoria(db, categoria)
+    if not servicios:
+        raise HTTPException(status_code=404, detail="No se encontraron servicios con esa categoría")
+    return servicios

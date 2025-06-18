@@ -5,6 +5,11 @@ from passlib.context import CryptContext
 from models import CartItem
 from schemas import CartItemCreate
 from schemas import PedidoCabeceraCreate
+from models import DetalleDePedido
+from schemas import DetalleDePedidoCreate
+from models import Servicios
+from schemas import ServicioCreate
+from models import pedidosPendientes
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -41,8 +46,49 @@ def remove_item(db: Session, user_id: int, product_id: int):
         db.commit()
 
 def create_pedido(db: Session, pedido: PedidoCabeceraCreate):
-    db_pedido = PedidoCabecera(**pedido.dict())
+    db_pedido = pedidosPendientes(
+        user_id=pedido.user_id,
+        servicio_id=pedido.servicio_id,
+        numero_pedido=pedido.numero_pedido,
+        monto_total=pedido.monto_total,
+        estado=pedido.estado,
+        fecha_creacion=str(pedido.fecha_creacion),  
+        direccion_entrega=pedido.direccion_entrega,
+        email_usuario=pedido.email_usuario
+    )
     db.add(db_pedido)
     db.commit()
     db.refresh(db_pedido)
     return db_pedido
+
+
+
+def crear_detalle_de_pedido(db: Session, detalles: list[DetalleDePedidoCreate]):
+    nuevos_detalles = []
+    for detalle_data in detalles:
+        nuevo = detalleDePedido(**detalle_data.dict())
+        db.add(nuevo)
+        nuevos_detalles.append(nuevo)
+    db.commit()
+    for d in nuevos_detalles:
+        db.refresh(d)
+    return nuevos_detalles
+
+def actualizar_estado_pedido(db: Session, pedido_id: int, nuevo_estado: str):
+    pedido = db.query(pedidosPendientes).filter(pedidosPendientes.id == pedido_id).first()
+    if not pedido:
+        return None
+    pedido.estado = nuevo_estado
+    db.commit()
+    db.refresh(pedido)
+    return pedido
+
+def crear_servicio(db: Session, servicio: ServicioCreate):
+    nuevo_servicio = Servicios(**servicio.dict())
+    db.add(nuevo_servicio)
+    db.commit()
+    db.refresh(nuevo_servicio)
+    return nuevo_servicio
+    
+def filtrar_servicios_por_categoria(db: Session, categoria: str):
+    return db.query(Servicios).filter(Servicios.categoria == categoria).all()

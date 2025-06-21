@@ -1,7 +1,8 @@
 export interface User {
-    id: number,
-    name?: string,
-    lastName?: string,
-    email: string,
-    role?: string,
+    id: number; // Para compatibilidad con frontend
+    user_id?: number; // Para compatibilidad con backend si se requiere
+    name?: string;
+    lastName?: string;
+    email: string;
+    role?: string;
 }

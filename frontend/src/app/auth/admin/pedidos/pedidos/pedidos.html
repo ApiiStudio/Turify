@@ -178,48 +178,57 @@
                         <div class="container-fluid mt-4">
                             <h2 class="mb-3">Panel de Pedidos</h2>
                             <table class="table table-bordered table-hover">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>N° Pedido</th>
-                                        <th>Email Usuario</th>
-                                        <th>Monto Total</th>
-                                        <th>Estado</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @for (pedido of pedidos; track pedido.id) {
-                                    <tr>
-                                        <td>{{ pedido.numero_pedido }}</td>
-                                        <td>{{ pedido.email_usuario }}</td>
-                                        <td>${{ pedido.monto_total }}</td>
-                                        <td>
-                                            <span [ngClass]="{
-                                                'text-warning': pedido.estado === 'pendiente',
-                                                'text-success': pedido.estado === 'completo',
-                                                'text-danger': pedido.estado === 'anulado'
-                                            }">{{ pedido.estado }}</span>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-sm btn-success me-1"
-                                                (click)="cambiarEstado(pedido.id, 'completo')"
-                                                [disabled]="pedido.estado === 'completo'">
-                                                Completar
-                                            </button>
-                                            <button class="btn btn-sm btn-danger"
-                                                (click)="cambiarEstado(pedido.id, 'anulado')"
-                                                [disabled]="pedido.estado === 'anulado'">
-                                                Anular
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    }
-                                    @if (pedidos.length === 0) {
-                                    <tr>
-                                        <td colspan="5" class="text-center">No hay pedidos registrados.</td>
-                                    </tr>
-                                    }
-                                </tbody>
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Número de Pedido</th>
+                                            <th>Email del Usuario</th>
+                                            <th>Monto Total</th>
+                                            <th>Estado</th>
+                                            <th>Cambiar Estado</th>
+                                            <th>Anular</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (pedido of pedidos; track pedido.id) {
+                                        <tr>
+                                            <td>{{ pedido.numero_pedido }}</td>
+                                            <td>{{ pedido.email_usuario }}</td>
+                                            <td>${{ pedido.monto_total }}</td>
+                                            <td>
+                                                <span [ngClass]="{
+              'text-warning': pedido.estado === 'pendiente',
+              'text-success': pedido.estado === 'completo',
+              'text-danger': pedido.estado === 'anulado'
+            }">
+                                                    {{ pedido.estado }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <select class="form-select form-select-sm w-auto"
+                                                    [value]="pedido.estado"
+                                                    [disabled]="pedido.estado === 'anulado'"
+                                                    (change)="cambiarEstado(pedido.id, $any($event.target).value)">
+                                                    <option value="pendiente">Pendiente</option>
+                                                    <option value="completo">Completo</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-danger"
+                                                    (click)="anularPedidoAdmin(pedido.id)"
+                                                    [disabled]="pedido.estado === 'anulado'">
+                                                    Anular
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        }
+                                        @if (pedidos.length === 0) {
+                                        <tr>
+                                            <td colspan="6" class="text-center">No hay pedidos registrados.</td>
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table>
                             </table>
                         </div>
                     </div>

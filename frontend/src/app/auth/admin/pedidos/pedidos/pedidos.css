@@ -25,7 +25,7 @@ body {
     background-color: #fff;
 }
 
-/* Sidebar */
+/* Sidebar*/
 #sidebar {
     width: 90px;
     min-width: 90px;
@@ -248,7 +248,6 @@ a.sidebar-link:hover {
     }
 }
 
-
 /* Navbar */
 .navbar {
     background-color: #FFF;
@@ -264,7 +263,7 @@ a.sidebar-link:hover {
     width: 80px;
 }
 
-/* Cards */
+/* Card */
 .card {
     background-color: #FFF;
     transition: .4s;

@@ -2,15 +2,15 @@ import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@ang
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, } from '@angular/forms';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { Footer } from '../../shared/footer/footer';
-import { AuthLogin } from '../../services/auth-login';
-import { LoginRequest } from '../../services/loginRequest';
+import { AuthLogin } from '../../services/auth-login/auth-login';
+import { LoginRequest } from '../../services/auth-login/loginRequest';
 
 
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule, RouterLink, Footer, ],
   templateUrl: './login.html',
-  styleUrl: './login.css'
+  styleUrls: ['./login.css']
 })
 export class Login implements AfterViewInit, OnDestroy {
   loginError:string="";

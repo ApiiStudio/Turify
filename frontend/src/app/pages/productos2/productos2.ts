@@ -1,14 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 // Update the import path and exported member to match the actual file and export
-import { ProductoService2, Producto } from '../../services/producto-service2';
+import { ProductoService2, Producto } from '../../services/producto/producto-service2';
 import { Header } from '../../shared/header/header';
 import { Nav } from '../../shared/nav/nav';
 import { Footer } from '../../shared/footer/footer';
 import { CommonModule } from '@angular/common';
-import { AuthLogin } from '../../services/auth-login';
+import { AuthLogin } from '../../services/auth-login/auth-login';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../services/user';
-import { CarritoService } from '../../services/carrito-service';
+import { CarritoService } from '../../services/carrito/carrito-service';
 import { FormControl } from '@angular/forms';
 
 
@@ -16,11 +16,11 @@ import { FormControl } from '@angular/forms';
   selector: 'app-productos2',
   templateUrl: './productos2.html',
   styleUrls: ['./productos2.css'],
-  imports: [Header, Footer, CommonModule,],
+  imports: [Header, Footer, CommonModule],
 })
 export class Productos2Component implements OnInit {
   productos: Producto[] = [];
-  categoriaSeleccionada = 'paquete';
+  categoriaSeleccionada = 'Paquete';
   categorias: string[] = ['paquete', 'vuelo', 'alojamiento', 'excursion', 'auto'];
   userData?: User;
   userLoginOn: boolean = false;
@@ -32,47 +32,59 @@ export class Productos2Component implements OnInit {
     private carritoService: CarritoService,
     private route: ActivatedRoute,
   ) { }
+  
 
   // Inicia el componente y obtiene los productos
   ngOnInit(): void {
-    this.productoService2.getProductos().subscribe(data => {
-      console.log("productos recibidos:", data);
-      this.productos = data;
-      this.actualizarFiltrados(this.categoriaSeleccionada);
-    });
     this.AuthLogin.currentUserLoginOn.subscribe({
       next: (userLoginOn) => {
         this.userLoginOn = userLoginOn
       }
     });
-    // Suscribirse a los datos del usuario actual
     this.AuthLogin.currentUserData.subscribe({
       next: (userData) => {
         this.userData = userData;
       }
     });
-  this.categoriaControl = new FormControl('');
+    this.categoriaControl = new FormControl('');
 
-  this.route.queryParams.subscribe(params => {
-    const categoria = params['categoria'];
-    if (categoria) {
-      this.categoriaControl.setValue(categoria);
-      this.categoriaSeleccionada = categoria;
-      this.actualizarFiltrados(categoria); // Asegurate de hacer el filtrado manual
-    }
-  });
-
-  this.categoriaControl.valueChanges.subscribe(categoria => {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { categoria },
-      queryParamsHandling: 'merge'
+    // 1. Primero obtenemos los productos
+    this.productoService2.getProductosApi().subscribe((productos) => {
+      this.productos = productos;
+      // 2. Luego, chequeamos si hay categoría en la URL
+      const categoria = this.route.snapshot.queryParamMap.get('categoria');
+      if (categoria) {
+        this.categoriaControl.setValue(categoria);
+        this.categoriaSeleccionada = categoria;
+        this.actualizarFiltrados(categoria);
+      } else {
+        this.actualizarFiltrados('');
+      }
     });
 
-    this.categoriaSeleccionada = categoria ?? '';
-    this.actualizarFiltrados(categoria ?? '');
-  });
-}
+    // 3. Escuchamos cambios en la URL después de la carga inicial
+    this.route.queryParams.subscribe(params => {
+      const categoria = params['categoria'];
+      if (categoria) {
+        this.categoriaControl.setValue(categoria);
+        this.categoriaSeleccionada = categoria;
+        this.actualizarFiltrados(categoria);
+      } else {
+        this.actualizarFiltrados('');
+      }
+    });
+
+    // 4. Escuchamos cambios en el control
+    this.categoriaControl.valueChanges.subscribe(categoria => {
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: { categoria },
+        queryParamsHandling: 'merge'
+      });
+      this.categoriaSeleccionada = categoria ?? '';
+      this.actualizarFiltrados(categoria ?? '');
+    });
+  }
 
   categoriaControl = new FormControl('');
 
@@ -87,9 +99,13 @@ export class Productos2Component implements OnInit {
   }
 
   actualizarFiltrados(categoria: any): void {
-    this.productosFiltrados = this.productos.filter(
-      p => p.categoria === categoria
-    );
+    if (!categoria) {
+      this.productosFiltrados = [...this.productos];
+    } else {
+      this.productosFiltrados = this.productos.filter(
+        p => p.categoria === categoria
+      );
+    }
     console.log("se filtran los productos:", categoria, this.productosFiltrados);
   }
 
@@ -98,8 +114,5 @@ export class Productos2Component implements OnInit {
   }
   trackById(index: number, item: Producto) {
     return item.id;
-  }
-  eliminarServicio(id: number) {
-    this.productoService2.eliminarProducto(id);
   }
 }

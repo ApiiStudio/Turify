@@ -16,12 +16,14 @@
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/home/sobre-nosotros">Sobre Nosotros</a>
                 </li>
+                @if (isAdmin) {
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/admin">admin</a>
+                    <a class="nav-link" routerLink="/admin">Admin</a>
                 </li>
+                }
             </ul>
             <!--Carrito-->
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav ms-auto mb-3 mb-lg-0 margin-right">
                 @if (userLoginOn) {
                 <li class="nav-item register-item">
                     <a class="nav-link cart-link ms-2" routerLink="/carrito">
@@ -29,20 +31,25 @@
                         (<span>{{carritoService.cantidad()}}</span>)
                     </a>
                 </li>
-                <!--Cuenta-->
+                <!-- Cuenta -->
                 <div class="navbar-collapse collapse">
-                    <ul class="navbar-nav ms auto">
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item dropdown">
-                            <a href="#" data-bs-toggle="dropdown" class="nav-link register-link cart-link ms-2 ">
-                                <i class="fa-solid fa-user"></i>
+                            <a href="#" data-bs-toggle="dropdown" class="nav-link ms-2 d-flex align-items-center gap-2">
+                                <i class="fa-solid fa-user fs-5"></i>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-end rounded-0 border-0 shadow mt-3">
-                                <a href="#" class="dropdown-item">
+                            <div class="dropdown-menu dropdown-menu-end rounded shadow-sm mt-3 p-2 bg-light border-0"
+                                style="min-width: 200px;">
+                                <div class="px-3 py-2">
+                                    <h6 class="mb-0 fw-semibold">¡Bienvenido, {{userName}}!</h6>
+                                </div>
+                                <hr class="my-1">
+                                <a href="#" class="dropdown-item d-flex align-items-center gap-2 text-secondary">
                                     <i class="fa-solid fa-life-ring"></i>
                                     <span>Ayuda</span>
                                 </a>
-                                <hr>
-                                <a href="#" class="dropdown-item" (click)="logout()">
+                                <a href="#" class="dropdown-item d-flex align-items-center gap-2 text-secondary"
+                                    (click)="logout()">
                                     <i class="fa-solid fa-right-from-bracket"></i>
                                     <span>Salir</span>
                                 </a>

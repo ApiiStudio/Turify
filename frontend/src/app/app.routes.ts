@@ -4,11 +4,11 @@ import { Home } from './pages/home/home';
 import { AboutUs } from './pages/aboutUs/aboutUs';
 import { Register } from './auth/register/register';
 import { Inicio } from './pages/inicio/inicio';
-import { Admin } from './auth/admin/admin';
-import { Productos } from './pages/productos/productos';
+import { Admin } from './auth/admin/admin/admin';
 import { Productos2Component } from './pages/productos2/productos2';
-import { Cart } from './shared/cart/cart';
+import { Cart } from './carrito/cart/cart';
 import { Servicios } from './auth/admin/servicios/servicios';
+import { Pedidos } from './auth/admin/pedidos/pedidos/pedidos';
 
 
 export const routes: Routes = [
@@ -23,7 +23,7 @@ export const routes: Routes = [
     {path:"register", component:Register}, //publico
     {path:"admin", component:Admin},
     {path:"servicios", component:Servicios},
-    {path:"productos", component:Productos},
     {path:"productos2", component:Productos2Component},
     {path:"carrito", component:Cart},
+    {path:"pedidos", component:Pedidos}
 ];

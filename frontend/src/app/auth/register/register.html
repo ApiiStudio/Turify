@@ -4,7 +4,7 @@
     </a>
     <div class="register-card">
         <h3 class="register-title text-center mb-4">Crear cuenta</h3>
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit($event)" class="container">
+        <form [formGroup]="registerForm" (ngSubmit)="signup()" class="container">
             <!--Nombre y Apellido-->
             <div class="mb-3">
                 <label for="exampleInputName1" class="form-label register-label">Nombre</label>
@@ -27,7 +27,7 @@
             </div>
             <div class="mb-3">
                 <label for="exampleInputsurName1" class="form-label register-label">Apellido</label>
-                <input type="text" class="form-control" id="exampleInputsurName1" formControlSurName="surname" />
+                <input type="text" class="form-control" id="exampleInputsurName1" formControlName="surname" />
                 <!--Validaciones NyA-->
                 @if (surname?.errors && surname?.touched) {
                 @if (surname?.hasError('required')) {

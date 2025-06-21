@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { About } from '../../services/about';
+import { About } from '../../services/about/about';
 
 @Component({
   selector: 'app-aboutUs',

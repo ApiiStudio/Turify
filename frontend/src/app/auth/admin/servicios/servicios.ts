@@ -1,13 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component } from '@angular/core';
-import { FormControl, FormsModule } from '@angular/forms';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Header } from '../../../shared/header/header';
 import { Nav } from '../../../shared/nav/nav';
-import { Producto, ProductoService2 } from '../../../services/producto-service2';
-import { ProductoService } from '../../../services/productoService';
-import { BehaviorSubject } from 'rxjs';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Producto, ProductoService2 } from '../../../services/producto/producto-service2';
 
 @Component({
   selector: 'app-servicios',
@@ -16,24 +13,18 @@ import { ReactiveFormsModule } from '@angular/forms';
   templateUrl: './servicios.html',
   styleUrls: ['./servicios.css']
 })
-
-export class Servicios implements AfterViewInit {
+export class Servicios implements OnInit, AfterViewInit {
   productos: Producto[] = [];
+  productosFiltrados: Producto[] = [];
   nuevoServicio: any = {};
-  editandoIndex: number | null = null;
   idEditando: number | null = null;
 
-  categoriasDisponibles: string[] = ['paquete', 'excursion', 'vuelo', 'alojamiento', 'auto'];
+  categoriaSeleccionada: string = '';
 
-  categoriaControl = new FormControl(''); // 🔹 Control reactivo para el select
+  constructor(private productoService: ProductoService2) {}
 
-  private productosSubject = new BehaviorSubject<Producto[]>([]);
-
-  constructor(private productoService: ProductoService2) {
-    this.productoService.getProductos().subscribe(productos => {
-      this.productos = productos;
-      this.productosSubject.next(productos); // Si en el futuro querés trabajar con observable
-    });
+  ngOnInit(): void {
+    this.cargarProductos();
   }
 
   ngAfterViewInit() {
@@ -48,16 +39,48 @@ export class Servicios implements AfterViewInit {
     }
   }
 
-  guardarServicio() {
-    if (this.idEditando !== null) {
-      const productoEditado = { ...this.nuevoServicio, id: this.idEditando };
-      this.productoService.editarProducto(this.idEditando, productoEditado);
-    } else {
-      const nuevo = { ...this.nuevoServicio, categoria: this.nuevoServicio.tipo };
-      this.productoService.addProducto(nuevo);
+  cargarProductos() {
+    // 1. Intenta cargar desde localStorage primero
+    const local = localStorage.getItem('productos');
+    if (local) {
+      this.productos = JSON.parse(local);
+      this.refrescarFiltrado();
     }
-    this.resetForm();
+    // 2. Luego sincroniza con la API
+    this.productoService.getProductosApi().subscribe({
+      next: (productos) => {
+        this.productos = productos;
+        localStorage.setItem('productos', JSON.stringify(productos));
+        this.refrescarFiltrado();
+      },
+      error: (err) => console.error('Error al cargar productos:', err)
+    });
   }
+
+guardarServicio() {
+  // 🔁 Lógica de edición
+    console.log('Enviando servicio...', this.nuevoServicio);
+  if (this.idEditando !== null) {
+    this.productoService.editarProductoApi(this.idEditando, this.nuevoServicio).subscribe({
+      next: () => {
+        this.cargarProductos();
+        this.resetForm();
+      },
+      error: (err) => console.error('Error al editar servicio:', err)
+    });
+  } else {
+    this.productoService.addProductoApi(this.nuevoServicio).subscribe({
+      next: () => {
+        // Actualiza localStorage inmediatamente
+        const nuevos = [...this.productos, this.nuevoServicio];
+        localStorage.setItem('productos', JSON.stringify(nuevos));
+        this.cargarProductos();
+        this.resetForm();
+      },
+      error: (err) => console.error('Error al agregar servicio:', err)
+    });
+  }
+}
 
   editarServicio(id: number) {
     const producto = this.productos.find(p => p.id === id);
@@ -67,25 +90,40 @@ export class Servicios implements AfterViewInit {
     }
   }
 
-  eliminarServicio(id: number) {
-    this.productoService.eliminarProducto(id);
-    this.resetForm();
+  refrescarFiltrado() {
+    const categoria = this.categoriaSeleccionada?.toLowerCase();
+    if (categoria) {
+      this.productosFiltrados = this.productos.filter(
+        p => p.categoria?.toLowerCase() === categoria
+      );
+    } else {
+      this.productosFiltrados = [...this.productos];
+    }
   }
 
-  resetForm() {
-    this.nuevoServicio = {};
-    this.editandoIndex = null;
-    this.idEditando = null;
-  }
-
-  get serviciosFiltrados() {
-    const categoria = this.categoriaControl.value;
-    return categoria
-      ? this.productos.filter(s => s.categoria === categoria)
-      : this.productos;
-  }
-
+resetForm() {
+  this.nuevoServicio = {};
+  this.idEditando = null;
+  // también podés resetear el form visualmente si usás TemplateRef:
+  const form = document.querySelector('form') as HTMLFormElement;
+  form?.reset();
+}
   trackById(index: number, item: any) {
     return item.id;
+  }
+
+  eliminarServicio(id: number) {
+    if (confirm('¿Estás seguro de que deseas eliminar este servicio?')) {
+      this.productoService.eliminarProductoApi(id).subscribe({
+        next: () => {
+          // Actualiza localStorage inmediatamente
+          const nuevos = this.productos.filter(p => p.id !== id);
+          localStorage.setItem('productos', JSON.stringify(nuevos));
+          this.cargarProductos();
+          this.resetForm();
+        },
+        error: (err) => console.error('Error al eliminar servicio:', err)
+      });
+    }
   }
 }

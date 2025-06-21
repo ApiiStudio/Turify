@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuthLogin } from '../../services/auth-login';
+import { AuthLogin } from '../../services/auth-login/auth-login';
 import { User } from '../../services/user';
-import { ProductoService2, Producto } from '../../services/producto-service2';
+import { ProductoService2, Producto } from '../../services/producto/producto-service2';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-inicio',
   imports: [CommonModule, RouterLink],
   templateUrl: './inicio.html',
-  styleUrl: './inicio.css'
+  styleUrls: ['./inicio.css']
 })
 export class Inicio implements OnInit {
   userData?: User;
@@ -30,13 +30,20 @@ export class Inicio implements OnInit {
       }
     });
 
-    this.productoService.getProductos().subscribe((data) => {
-      this.productos = this.shuffleArray(data);
+    // Cargar productos desde la API
+    this.productoService.getProductosApi().subscribe({
+      next: (productos) => {
+        this.productos = productos || [];
+        this.currentIndex = 0; // Reinicia el índice para evitar errores
+      },
+      error: (err) => console.error('Error al cargar productos:', err)
     });
 
     this.autoSlideInterval = setInterval(() => {
-      this.next();
-    }, 50);
+      if (this.productos.length > 0) {
+        this.next();
+      }
+    }, 3000); // Cambia a 3 segundos para mejor UX
 
     this.AuthLogin.currentUserData.subscribe({
       next: (userData) => {
@@ -52,6 +59,9 @@ export class Inicio implements OnInit {
   }
 
 get productosVisibles(): Producto[] {
+  if (!this.productos || this.productos.length === 0) {
+    return [];
+  }
   const total = this.productos.length;
   const visibles: Producto[] = [];
 
@@ -64,17 +74,20 @@ get productosVisibles(): Producto[] {
 }
 
   next(): void {
+    if (this.productos.length === 0) return;
     if (this.currentIndex + this.visibleCount < this.productos.length) {
       this.currentIndex++;
-    }
-    else {
+    } else {
       this.currentIndex = 0;
     }
   }
 
   prev(): void {
+    if (this.productos.length === 0) return;
     if (this.currentIndex > 0) {
       this.currentIndex--;
+    } else {
+      this.currentIndex = Math.max(0, this.productos.length - this.visibleCount);
     }
   }
 

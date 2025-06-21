@@ -1,4 +1,7 @@
+<app-header></app-header>
+<app-nav></app-nav>
 <div class="wrapper">
+    <!-- Sidebar -->
     <aside id="sidebar">
         <div class="d-flex justify-content-between p-4">
             <div class="sidebar-logo">
@@ -10,6 +13,7 @@
                 <i id="icon" class="fa-solid fa-chevron-right"></i>
             </button>
         </div>
+        <!-- Opciones -->
         <ul class="sidebar-nav">
             <li class="sidebar-item">
                 <a routerLink="/admin" class="sidebar-link">
@@ -68,6 +72,7 @@
             </a>
         </div>
     </aside>
+    <!-- Main -->
     <div class="main">
         <nav class="navbar navbar-expand px-4 py-3">
             <form action="#" class="d-non d-sm-inline-block">
@@ -107,23 +112,24 @@
         <main class="content px-3 py-4">
             <div class="container-fluid">
                 <div class="mb-3">
-                    <h3 class="fw-bold fs-4 mb-3">Admin Dashboard</h3>
+                    <h3 class="fw-bold fs-4 mb-3">Pedidos Dashboard</h3>
                     <div class="row">
+                        <!-- Cards -->
                         <div class="col-12 col-md-4">
                             <div class="card shadow">
                                 <div class="card-body py-4">
                                     <h6 class="mb-2 fw-bold">
-                                        Member Progress
+                                        Pedidos Totales
                                     </h6>
                                     <p class="fw-bold mb-2">
-                                        $100,000
+                                        1.382
                                     </p>
                                     <div class="mb-0">
                                         <span class="bagde text-success me-2">
-                                            +9.0%
+                                            +12.4%
                                         </span>
                                         <span class="fw-bold">
-                                            Since Last Month
+                                            Desde el Mes Pasado
                                         </span>
                                     </div>
                                 </div>
@@ -133,17 +139,17 @@
                             <div class="card shadow">
                                 <div class="card-body py-4">
                                     <h6 class="mb-2 fw-bold">
-                                        Member Progress
+                                        Transporte
                                     </h6>
                                     <p class="fw-bold mb-2">
-                                        $100,000
+                                        832
                                     </p>
                                     <div class="mb-0">
                                         <span class="bagde text-success me-2">
-                                            +9.0%
+                                            +8.3%
                                         </span>
                                         <span class="fw-bold">
-                                            Since Last Month
+                                            Desde el Mes Pasado
                                         </span>
                                     </div>
                                 </div>
@@ -153,89 +159,76 @@
                             <div class="card shadow">
                                 <div class="card-body py-4">
                                     <h6 class="mb-2 fw-bold">
-                                        Member Progress
+                                        Alojamiento
                                     </h6>
                                     <p class="fw-bold mb-2">
-                                        $100,000
+                                        360
                                     </p>
                                     <div class="mb-0">
                                         <span class="bagde text-success me-2">
-                                            +9.0%
+                                            +21.1%
                                         </span>
                                         <span class="fw-bold">
-                                            Since Last Month
+                                            Desde el Mes Pasado
                                         </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-md-12">
-                            <h3 class="fw-bold fs-4 my-3">Usuarios Autorizados</h3>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr class="highlight">
-                                        <th scope="col-2">#</th>
-                                        <th scope="col-2">Nombre</th>
-                                        <th scope="col-2">Apellido</th>
-                                        <th scope="col-2">Email</th>
-                                        <th scope="col-2">Contraseña</th>
-                                        <th scope="col-2">Rol</th>
+                        <div class="container-fluid mt-4">
+                            <h2 class="mb-3">Panel de Pedidos</h2>
+                            <table class="table table-bordered table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>N° Pedido</th>
+                                        <th>Email Usuario</th>
+                                        <th>Monto Total</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let usuario of usuarios; let i = index">
-                                        <th scope="row">{{ usuario.id }}</th>
-                                        <td>{{ usuario.nombre }}</td>
-                                        <td>{{ usuario.apellido }}</td>
-                                        <td>{{ usuario.correo }}</td>
-                                        <td>{{ usuario.password }}</td>
-                                        <td>{{ usuario.rol }}</td>
-                                    </tr>
-
-                                    <!-- Fila del formulario para agregar nuevo usuario -->
-                                    <tr *ngIf="mostrarFormulario" class="bg-light align-middle">
-                                        <td class="fw-bold text-muted">Auto</td>
-                                        <td><input type="text" [(ngModel)]="nuevoUsuario.nombre"
-                                                class="form-control form-control-sm mi-placeholder" placeholder="Ej: Mario" /></td>
-                                        <td><input type="text" [(ngModel)]="nuevoUsuario.apellido"
-                                                class="form-control form-control-sm mi-placeholder" placeholder="Ej: Hernandez" /></td>
-                                        <td><input type="email" [(ngModel)]="nuevoUsuario.correo"
-                                                class="form-control form-control-sm mi-placeholder" placeholder="ejemplo@ejemplo.com" /></td>
-                                        <td><input type="text" [(ngModel)]="nuevoUsuario.password"
-                                                class="form-control form-control-sm mi-placeholder" placeholder="Ingrese contraseña..."/></td>
+                                    @for (pedido of pedidos; track pedido.id) {
+                                    <tr>
+                                        <td>{{ pedido.numero_pedido }}</td>
+                                        <td>{{ pedido.email_usuario }}</td>
+                                        <td>${{ pedido.monto_total }}</td>
                                         <td>
-                                            <select [(ngModel)]="nuevoUsuario.rol" class="form-select form-select-sm">
-                                                <option disabled value="">Seleccione rol</option>
-                                                <option value="Admin">Admin</option>
-                                                <option value="Jefe de Ventas">Jefe de Ventas</option>
-                                            </select>
+                                            <span [ngClass]="{
+                                                'text-warning': pedido.estado === 'pendiente',
+                                                'text-success': pedido.estado === 'completo',
+                                                'text-danger': pedido.estado === 'anulado'
+                                            }">{{ pedido.estado }}</span>
                                         </td>
                                         <td>
-                                            <div class="d-flex gap-2">
-                                                <button (click)="agregarUsuario()"
-                                                    class="btn btn-success btn-sm">Guardar</button>
-                                                <button (click)="cancelarAgregar()"
-                                                    class="btn btn-outline-secondary btn-sm">Cancelar</button>
-                                            </div>
+                                            <button class="btn btn-sm btn-success me-1"
+                                                (click)="cambiarEstado(pedido.id, 'completo')"
+                                                [disabled]="pedido.estado === 'completo'">
+                                                Completar
+                                            </button>
+                                            <button class="btn btn-sm btn-danger"
+                                                (click)="cambiarEstado(pedido.id, 'anulado')"
+                                                [disabled]="pedido.estado === 'anulado'">
+                                                Anular
+                                            </button>
                                         </td>
                                     </tr>
+                                    }
+                                    @if (pedidos.length === 0) {
+                                    <tr>
+                                        <td colspan="5" class="text-center">No hay pedidos registrados.</td>
+                                    </tr>
+                                    }
                                 </tbody>
-                                <div class="d-flex justify-content-end mb-3">
-                                    <button (click)="mostrarFormulario = true" class="btn">
-                                        <i class="fa-solid fa-user-plus"></i>
-                                        <span>Agregar usuario</span>
-                                    </button>
-                                </div>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
         </main>
+        <!-- Footer -->
         <footer class="footer">
-            <div class="cointainer-fluid">
+            <div class="container-fluid">
                 <div class="row text-body-secondary">
                     <div class="col-6 text-start">
                         <a routerLink="/home/inicio" class="text-body-secondary">
@@ -259,8 +252,7 @@
             </div>
         </footer>
     </div>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous"></script>

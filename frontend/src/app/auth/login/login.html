@@ -13,6 +13,7 @@
           [attr.autocomplete]="'off'" (focus)="showSuggestions = true" (blur)="hideSuggestions()"
           (input)="onEmailInput()" />
 
+          
         <!-- Sugerencias personalizadas -->
         @if (showSuggestions) {
         <ul class="email-suggestions-list">
@@ -64,7 +65,6 @@
           <a routerLink="/register" class="login-link ms-2">Registrarse</a>
         </p>
       </div>
-
       <!-- Botón -->
       <button type="submit" class="btn login-btn w-100">Iniciar sesión</button>
     </form>

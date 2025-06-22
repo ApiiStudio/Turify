@@ -197,10 +197,10 @@
                                             <td>${{ pedido.monto_total }}</td>
                                             <td>
                                                 <span [ngClass]="{
-              'text-warning': pedido.estado === 'pendiente',
-              'text-success': pedido.estado === 'completo',
-              'text-danger': pedido.estado === 'anulado'
-            }">
+                                                    'text-warning': pedido.estado === 'pendiente',
+                                                    'text-success': pedido.estado === 'completo',
+                                                    'text-danger': pedido.estado === 'anulado'
+                                                }">
                                                     {{ pedido.estado }}
                                                 </span>
                                             </td>

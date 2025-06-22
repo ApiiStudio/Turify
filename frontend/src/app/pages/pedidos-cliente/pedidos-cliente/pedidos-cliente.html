@@ -1,4 +1,55 @@
 <app-header></app-header>
 <app-nav></app-nav>
-<h4>Mis pedidos</h4>
+<div class="container mt-4">
+    <h2 class="mb-4">Mis Pedidos</h2>
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Número</th>
+                <th>Categoría</th>
+                <th>Nombre Servicio</th>
+                <th>Monto Total</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Anular</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (pedido of pedidos; track pedido.id) {
+            <tr>
+                <td>{{ pedido.numero_pedido }}</td>
+                <td>{{ pedido.categoria }}</td>
+                <td>{{ pedido.servicio_id }}</td>
+                <td>${{ pedido.monto_total }}</td>
+                <td>
+                    <span [ngClass]="{
+                        'text-warning': pedido.estado === 'pendiente',
+                        'text-success': pedido.estado === 'completo',
+                        'text-danger': pedido.estado === 'anulado'
+                    }">
+                        {{ pedido.estado }}
+                    </span>
+                </td>
+                <td>{{ pedido.fecha_creacion | date:'shortDate' }}</td>
+                <td>
+                    @if (pedido.estado === 'pendiente') {
+                    <button class="btn btn-sm btn-outline-danger" (click)="anularPedido(pedido.id)">
+                        Anular
+                    </button>
+                    } @else if (pedido.estado === 'anulado') {
+                    <span class="text-danger fw-bold">Anulado</span>
+                    }
+                </td>
+            </tr>
+
+            }
+            @if (pedidos.length === 0) {
+            <tr>
+                <td colspan="7" class="text-center">No hay pedidos registrados.</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
 <app-footer></app-footer>

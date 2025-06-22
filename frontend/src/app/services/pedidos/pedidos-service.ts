@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AuthLogin } from '../auth-login/auth-login';
 
 export interface Pedido {
+  categoria?: any;
   id: number;
   servicio_id: number;
   user_id: number;
@@ -12,6 +14,7 @@ export interface Pedido {
   fecha_creacion: string;
   direccion_entrega: string;
   email_usuario: string;
+  
 }
 
 export interface DetallePedido {
@@ -36,7 +39,8 @@ export class PedidoService {
   private apiUrl = 'https://turifyback.onrender.com/pedidos';
   private userApiUrl = 'https://turifyback.onrender.com/usuarios';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private auth: AuthLogin) { }
+  
 
   crearPedido(pedido: Pedido): Observable<any> {
     return this.http.post(`${this.apiUrl}/`, pedido);
@@ -62,5 +66,8 @@ actualizarEstadoPedido(id: number, nuevo_estado: string): Observable<any> {
   
 anularPedidoAdmin(pedido_id: number): Observable<any> {
   return this.http.put(`${this.apiUrl}/anular`, { pedido_id });
+}
+getPedidosPorUsuario(id: number): Observable<Pedido[]> {
+  return this.http.get<Pedido[]>(`${this.apiUrl}/mios?user_id=${id}`);
 }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LoginRequest } from './loginRequest';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject, tap, catchError, of } from 'rxjs';
 import { User } from '../user';
 
@@ -80,4 +80,10 @@ export class AuthLogin {
     }
     return throwError(() => Error('Algo falló. Por favor intenta nuevamente.'));
   }
+  getAuthHeaders(): HttpHeaders {
+  const token = localStorage.getItem('token');
+  return new HttpHeaders({
+    Authorization: `Bearer ${token}`
+  });
+}
 }

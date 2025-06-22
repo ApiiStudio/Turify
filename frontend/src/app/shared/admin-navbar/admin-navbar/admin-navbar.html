@@ -180,54 +180,18 @@
                                         <th scope="col-2">Nombre</th>
                                         <th scope="col-2">Apellido</th>
                                         <th scope="col-2">Email</th>
-                                        <th scope="col-2">Contraseña</th>
                                         <th scope="col-2">Rol</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let usuario of usuarios; let i = index">
-                                        <th scope="row">{{ usuario.id }}</th>
-                                        <td>{{ usuario.nombre }}</td>
-                                        <td>{{ usuario.apellido }}</td>
-                                        <td>{{ usuario.correo }}</td>
-                                        <td>{{ usuario.password }}</td>
-                                        <td>{{ usuario.rol }}</td>
-                                    </tr>
-
-                                    <!-- Fila del formulario para agregar nuevo usuario -->
-                                    <tr *ngIf="mostrarFormulario" class="bg-light align-middle">
-                                        <td class="fw-bold text-muted">Auto</td>
-                                        <td><input type="text" [(ngModel)]="nuevoUsuario.nombre"
-                                                class="form-control form-control-sm mi-placeholder" placeholder="Ej: Mario" /></td>
-                                        <td><input type="text" [(ngModel)]="nuevoUsuario.apellido"
-                                                class="form-control form-control-sm mi-placeholder" placeholder="Ej: Hernandez" /></td>
-                                        <td><input type="email" [(ngModel)]="nuevoUsuario.correo"
-                                                class="form-control form-control-sm mi-placeholder" placeholder="ejemplo@ejemplo.com" /></td>
-                                        <td><input type="text" [(ngModel)]="nuevoUsuario.password"
-                                                class="form-control form-control-sm mi-placeholder" placeholder="Ingrese contraseña..."/></td>
-                                        <td>
-                                            <select [(ngModel)]="nuevoUsuario.rol" class="form-select form-select-sm">
-                                                <option disabled value="">Seleccione rol</option>
-                                                <option value="Admin">Admin</option>
-                                                <option value="Jefe de Ventas">Jefe de Ventas</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex gap-2">
-                                                <button (click)="agregarUsuario()"
-                                                    class="btn btn-success btn-sm">Guardar</button>
-                                                <button (click)="cancelarAgregar()"
-                                                    class="btn btn-outline-secondary btn-sm">Cancelar</button>
-                                            </div>
-                                        </td>
+                                    <tr *ngIf="usuarioActual">
+                                        <th scope="row">{{ usuarioActual.user_id || usuarioActual.id }}</th>
+                                        <td>{{ usuarioActual.name }}</td>
+                                        <td>{{ usuarioActual.surname }}</td>
+                                        <td>{{ usuarioActual.email }}</td>
+                                        <td>{{ usuarioActual.role }}</td>
                                     </tr>
                                 </tbody>
-                                <div class="d-flex justify-content-end mb-3">
-                                    <button (click)="mostrarFormulario = true" class="btn">
-                                        <i class="fa-solid fa-user-plus"></i>
-                                        <span>Agregar usuario</span>
-                                    </button>
-                                </div>
                             </table>
                         </div>
                     </div>

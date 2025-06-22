@@ -18,6 +18,8 @@ import { ChangeDetectorRef } from '@angular/core';
 
 export class Pedidos implements OnInit {
   pedidos: Pedido[] = [];
+  pedidosPendientes: Pedido[] = [];
+  pedidosHistoricos: Pedido[] = [];
 
   constructor(private pedidoService: PedidoService, private cdr: ChangeDetectorRef) {}
 
@@ -37,37 +39,42 @@ export class Pedidos implements OnInit {
     }
   }
 
-cargarPedidos(): void {
-  this.pedidoService.getPedidos().subscribe({
-    next: res => {
-      this.pedidos = res;
-      this.cdr.detectChanges(); // 👈 fuerza la actualización de la vista
-    },
-    error: err => console.error('Error al obtener pedidos:', err)
-  });
-}
+  cargarPedidos(): void {
+    this.pedidoService.getPedidos().subscribe({
+      next: res => {
+        console.log(res)
+        this.pedidos = res;
+        this.pedidosPendientes = res.filter(p => p.estado === 'pendiente');
+        this.pedidosHistoricos = res.filter(p => p.estado === 'completo' || p.estado === 'anulado');
+        this.cdr.detectChanges();
+      },
+      error: err => console.error('Error al obtener pedidos:', err)
+    });
+  }
+
+  trackById(index: number, pedido: Pedido): number {
+  return pedido.id;
+  }
 
   cambiarEstado(pedidoId: number, estado: string): void {
     this.pedidoService.actualizarEstadoPedido(pedidoId, estado).subscribe({
       next: () => {
-        const pedido = this.pedidos.find(p => p.id === pedidoId);
-        if (pedido) pedido.estado = estado;
+        this.cargarPedidos();
       },
       error: err => console.error('Error al actualizar estado:', err)
     });
   }
-anularPedidoAdmin(id: number): void {
-  if (confirm('¿Estás seguro de que querés anular este pedido?')) {
-    this.pedidoService.anularPedidoAdmin(id).subscribe({
-      next: () => {
-        this.pedidos = this.pedidos.map(p =>
-          p.id === id ? { ...p, estado: 'anulado' } : p
-        );
-      },
-      error: err => {
-        alert(err.error?.detail || 'Error al anular el pedido');
-      }
-    });
+
+  anularPedidoAdmin(id: number): void {
+    if (confirm('¿Estás seguro de que querés anular este pedido?')) {
+      this.pedidoService.anularPedidoAdmin(id).subscribe({
+        next: () => this.cargarPedidos(),
+        error: err => alert(err.error?.detail || 'Error al anular el pedido')
+      });
+    }
   }
+
+getTotalesPorEstado(estado: 'pendiente' | 'anulado' | 'completo'): number {
+  return this.pedidos.filter(p => p.estado === estado).length;
 }
 }

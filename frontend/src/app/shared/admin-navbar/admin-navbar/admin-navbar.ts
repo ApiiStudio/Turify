@@ -3,6 +3,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Servicios } from '../../../auth/admin/servicios/servicios';
+import { AuthLogin } from '../../../services/auth-login/auth-login';
 
 @Component({
   selector: 'app-admin-navbar',
@@ -12,6 +13,12 @@ import { Servicios } from '../../../auth/admin/servicios/servicios';
 })
 
 export class AdminNavbar implements AfterViewInit {
+usuarioActual: any;
+
+constructor(private authlogin: AuthLogin){
+  this.usuarioActual = this.authlogin.currentUserData.value;
+}
+
   ngAfterViewInit() {
     const hamburguer = document.querySelector(".toggle-btn");
     const toggler = document.querySelector("#icon");
@@ -23,38 +30,8 @@ export class AdminNavbar implements AfterViewInit {
       });
     }
   }
-  //Usuarios Ejemplo
-  usuarios = [
-  { id: 1, nombre: 'Benicio', apellido: 'Ferrer', correo: 'beniferrer@gmail.com', password: 'BeniDeveloper45', rol: 'Admin' },
-  { id: 2, nombre: 'Yaco', apellido: 'Ledesma', correo: 'yaquitoL@outlook.com', password: 'gatoperro2005', rol: 'Jefe de Ventas' },
-  { id: 3, nombre: 'Ezequiel', apellido: 'Rey', correo: 'ezerey15@gmail.com', password: 'Jsd42F4#', rol: 'Admin' },
-  { id: 4, nombre: 'Vicente', apellido: 'Sanchez', correo: 'viceensanchh@gmail.com', password: '$vScrOot#', rol: 'Jefe de Ventas' }
-  ];
-  //
-  nuevoUsuario = {
-  nombre: '',
-  apellido: '',
-  correo: '',
-  password: '',
-  rol: ''
-  };
 
   mostrarFormulario = false;
-
-  agregarUsuario() {
-  const nuevoId = this.usuarios.length + 1;
-  const usuario = {
-    id: nuevoId,
-    ...this.nuevoUsuario
-  };
-  this.usuarios.push(usuario);
-  this.nuevoUsuario = { nombre: '', apellido: '', correo: '', password: '', rol: '' };
-  this.mostrarFormulario = false;
-}
-cancelarAgregar() {
-  this.nuevoUsuario = { nombre: '', apellido: '', correo: '', password: '', rol: '' };
-  this.mostrarFormulario = false;
-}
 }
 const hamburguer = document.querySelector(".toggle-btn");
 const toggler = document.querySelector("#icon");
@@ -65,3 +42,4 @@ if (hamburguer) {
     toggler?.classList.toggle("fa-chevron-left");
   });
 }
+

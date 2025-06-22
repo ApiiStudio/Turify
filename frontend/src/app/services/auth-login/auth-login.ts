@@ -32,7 +32,7 @@ export class AuthLogin {
           id: userData.user_id,
           email: userData.email || '',
           name: userData.name,
-          lastName: userData.lastName,
+          surname: userData.surname,
           role: userData.role
         };
         this.currentUserData.next(user);
@@ -43,20 +43,26 @@ export class AuthLogin {
     );
   }
 
-  // 👇 Nuevo método para cargar datos desde la API /usuarios (tipo GET)
-  cargarUsuarioActual(): Observable<User | null> {
-    return this.http.get<User>(`${this.userUrl}`).pipe(
-      tap((user: User) => {
-        this.currentUserData.next(user);
-        this.currentUserLoginOn.next(true);
-        localStorage.setItem('userData', JSON.stringify(user));
-      }),
-      catchError((err) => {
-        console.warn('No se pudo recuperar la sesión desde el backend', err);
-        return of(null); // Devuelve null para indicar que no hay sesión válida
-      })
-    );
-  }
+cargarUsuarioActual(): Observable<User | null> {
+  return this.http.get<any>(`${this.userUrl}`).pipe(
+    tap((user: any) => {
+      const mappedUser: User = {
+        id: user.user_id || user.id,
+        email: user.email || '',
+        name: user.name,
+        surname: user.surname, 
+        role: user.role
+      };
+      this.currentUserData.next(mappedUser);
+      this.currentUserLoginOn.next(true);
+      localStorage.setItem('userData', JSON.stringify(mappedUser));
+    }),
+    catchError((err) => {
+      console.warn('No se pudo recuperar la sesión desde el backend', err);
+      return of(null);
+    })
+  );
+}
 
   logout(): void {
     localStorage.removeItem('userData');

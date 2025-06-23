@@ -1,6 +1,6 @@
 export interface User {
-    id: number; // Para compatibilidad con frontend
-    user_id?: number; // Para compatibilidad con backend si se requiere
+    id: number;
+    user_id?: number;
     name?: string;
     surname?: string;
     email: string;

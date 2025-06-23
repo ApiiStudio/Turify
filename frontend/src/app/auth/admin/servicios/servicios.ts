@@ -27,6 +27,7 @@ export class Servicios implements OnInit, AfterViewInit {
     this.cargarProductos();
   }
 
+  //Menú
   ngAfterViewInit() {
     const hamburguer = document.querySelector(".toggle-btn");
     const toggler = document.querySelector("#icon");
@@ -39,14 +40,13 @@ export class Servicios implements OnInit, AfterViewInit {
     }
   }
 
+  //Cargar Productos
   cargarProductos() {
-    // 1. Intenta cargar desde localStorage primero
     const local = localStorage.getItem('productos');
     if (local) {
       this.productos = JSON.parse(local);
       this.refrescarFiltrado();
     }
-    // 2. Luego sincroniza con la API
     this.productoService.getProductosApi().subscribe({
       next: (productos) => {
         this.productos = productos;
@@ -57,31 +57,31 @@ export class Servicios implements OnInit, AfterViewInit {
     });
   }
 
-guardarServicio() {
-  // 🔁 Lógica de edición
-    console.log('Enviando servicio...', this.nuevoServicio);
-  if (this.idEditando !== null) {
-    this.productoService.editarProductoApi(this.idEditando, this.nuevoServicio).subscribe({
-      next: () => {
-        this.cargarProductos();
-        this.resetForm();
-      },
-      error: (err) => console.error('Error al editar servicio:', err)
-    });
-  } else {
-    this.productoService.addProductoApi(this.nuevoServicio).subscribe({
-      next: () => {
-        // Actualiza localStorage inmediatamente
-        const nuevos = [...this.productos, this.nuevoServicio];
-        localStorage.setItem('productos', JSON.stringify(nuevos));
-        this.cargarProductos();
-        this.resetForm();
-      },
-      error: (err) => console.error('Error al agregar servicio:', err)
-    });
+  //Guarda Producto API
+  guardarServicio() {
+      console.log('Enviando servicio...', this.nuevoServicio);
+    if (this.idEditando !== null) {
+      this.productoService.editarProductoApi(this.idEditando, this.nuevoServicio).subscribe({
+        next: () => {
+          this.cargarProductos();
+          this.resetForm();
+        },
+        error: (err) => console.error('Error al editar servicio:', err)
+      });
+    } else {
+      this.productoService.addProductoApi(this.nuevoServicio).subscribe({
+        next: () => {
+          const nuevos = [...this.productos, this.nuevoServicio];
+          localStorage.setItem('productos', JSON.stringify(nuevos));
+          this.cargarProductos();
+          this.resetForm();
+        },
+        error: (err) => console.error('Error al agregar servicio:', err)
+      });
+    }
   }
-}
 
+  //Edita Producto
   editarServicio(id: number) {
     const producto = this.productos.find(p => p.id === id);
     if (producto) {
@@ -90,6 +90,7 @@ guardarServicio() {
     }
   }
 
+  //Refrescar Tabla
   refrescarFiltrado() {
     const categoria = this.categoriaSeleccionada?.toLowerCase();
     if (categoria) {
@@ -101,22 +102,21 @@ guardarServicio() {
     }
   }
 
-resetForm() {
-  this.nuevoServicio = {};
-  this.idEditando = null;
-  // también podés resetear el form visualmente si usás TemplateRef:
-  const form = document.querySelector('form') as HTMLFormElement;
-  form?.reset();
-}
+  resetForm() {
+    this.nuevoServicio = {};
+    this.idEditando = null;
+    const form = document.querySelector('form') as HTMLFormElement;
+    form?.reset();
+  }
   trackById(index: number, item: any) {
     return item.id;
   }
 
+  //Eliminar Producto
   eliminarServicio(id: number) {
     if (confirm('¿Estás seguro de que deseas eliminar este servicio?')) {
       this.productoService.eliminarProductoApi(id).subscribe({
         next: () => {
-          // Actualiza localStorage inmediatamente
           const nuevos = this.productos.filter(p => p.id !== id);
           localStorage.setItem('productos', JSON.stringify(nuevos));
           this.cargarProductos();

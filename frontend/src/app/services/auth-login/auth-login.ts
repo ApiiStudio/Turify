@@ -9,7 +9,7 @@ import { User } from '../user';
 })
 export class AuthLogin {
   private loginUrl = 'https://turifyback.onrender.com/login';
-  private userUrl = 'https://turifyback.onrender.com/usuarios';
+  private userUrl = 'https://turifyback.onrender.com/clientes';
 
   currentUserLoginOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   currentUserData: BehaviorSubject<User> = new BehaviorSubject<User>({ id: 0, email: '' });
@@ -21,7 +21,7 @@ export class AuthLogin {
       this.currentUserData.next(parsedUser);
       this.currentUserLoginOn.next(true);
     } else {
-      this.cargarUsuarioActual().subscribe(); // 👈 Cargar desde backend si existe sesión
+      this.cargarUsuarioActual().subscribe();
     }
   }
 
@@ -43,27 +43,29 @@ export class AuthLogin {
     );
   }
 
-cargarUsuarioActual(): Observable<User | null> {
-  return this.http.get<any>(`${this.userUrl}`).pipe(
-    tap((user: any) => {
-      const mappedUser: User = {
-        id: user.user_id || user.id,
-        email: user.email || '',
-        name: user.name,
-        surname: user.surname, 
-        role: user.role
-      };
-      this.currentUserData.next(mappedUser);
-      this.currentUserLoginOn.next(true);
-      localStorage.setItem('userData', JSON.stringify(mappedUser));
-    }),
-    catchError((err) => {
-      console.warn('No se pudo recuperar la sesión desde el backend', err);
-      return of(null);
-    })
-  );
-}
+  // Compara credenciales de ID
+  cargarUsuarioActual(): Observable<User | null> {
+    return this.http.get<any>(`${this.userUrl}`).pipe(
+      tap((user: any) => {
+        const mappedUser: User = {
+          id: user.user_id || user.id,
+          email: user.email || '',
+          name: user.name,
+          surname: user.surname,
+          role: user.role
+        };
+        this.currentUserData.next(mappedUser);
+        this.currentUserLoginOn.next(true);
+        localStorage.setItem('userData', JSON.stringify(mappedUser));
+      }),
+      catchError((err) => {
+        console.warn('No se pudo recuperar la sesión desde el backend', err);
+        return of(null);
+      })
+    );
+  }
 
+  // Logout
   logout(): void {
     localStorage.removeItem('userData');
     this.currentUserData.next({ id: 0, email: '' });
@@ -86,10 +88,15 @@ cargarUsuarioActual(): Observable<User | null> {
     }
     return throwError(() => Error('Algo falló. Por favor intenta nuevamente.'));
   }
+
   getAuthHeaders(): HttpHeaders {
-  const token = localStorage.getItem('token');
-  return new HttpHeaders({
-    Authorization: `Bearer ${token}`
-  });
-}
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+  }
+
+  getAllUsers() : Observable<User[]> {
+    return this.http.get<User[]>(this.userUrl);
+  }
 }

@@ -1,10 +1,9 @@
 <div class="login-wrapper">
-  <a class="navbar-brand margin-left" routerLink="/home/inicio">
+  <a class="navbar-brand margin-left" routerLink="/inicio">
     <img class="logo" src="/imagenes/logo/Logo Positivo.png" alt="Logo Positivo" height="70">
   </a>
   <div class="login-card">
     <h3 class="login-title text-center mb-4">Iniciar sesión</h3>
-
     <form [formGroup]="loginForm" (ngSubmit)="login()" class="container">
       <!-- Email -->
       <div class="mb-3" style="position: relative;" #emailContainer>
@@ -12,8 +11,6 @@
         <input type="email" class="form-control" id="exampleInputEmail1" formControlName="email"
           [attr.autocomplete]="'off'" (focus)="showSuggestions = true" (blur)="hideSuggestions()"
           (input)="onEmailInput()" />
-
-          
         <!-- Sugerencias personalizadas -->
         @if (showSuggestions) {
         <ul class="email-suggestions-list">
@@ -24,7 +21,6 @@
           }
         </ul>
         }
-
         <!-- Validaciones -->
         @if (email?.touched && email?.hasError('required')) {
         <p class="text-danger mt-1">El correo electrónico es requerido.</p>

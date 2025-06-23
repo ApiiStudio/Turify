@@ -5,11 +5,12 @@ import { Footer } from '../../shared/footer/footer';
 import { Observable } from 'rxjs';
 import { AuthSignupService } from '../../services/auth-signup/auth-signup';
 import { SignupRequest } from '../../services/auth-signup/signup-request';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, RouterLink, Footer,],
+  imports: [ReactiveFormsModule, RouterLink, Footer, CommonModule],
   templateUrl: './register.html',
   styleUrl: './register.css'
 })
@@ -37,7 +38,7 @@ export class Register implements AfterViewInit, OnDestroy {
   }
 
 
-  // Validador para la contraseña
+  // Valida la contraseña
   passwordComplexityValidator(control: any) {
     const value = control.value || '';
     const errors: any = {};
@@ -48,21 +49,23 @@ export class Register implements AfterViewInit, OnDestroy {
 
     return Object.keys(errors).length ? errors : null;
   }
+
   // Mensaje para la contraseña
   getPasswordError(): string | null {
     const control = this.password;
     if (control?.touched && control?.errors) {
       const errors = control.errors;
-
     }
     return null;
   }
+
   // Requisitos de la contraseña
   passwordRules = [
     { label: 'Al menos 8 caracteres', valid: false },
     { label: 'Al menos 1 número', valid: false },
     { label: 'Al menos 1 letra mayúscula', valid: false },
   ];
+
   // Método para validar los requisitos de la contraseña
   onPasswordInput(): void {
     const value: string = this.registerForm.get('password')?.value || '';
@@ -70,6 +73,7 @@ export class Register implements AfterViewInit, OnDestroy {
     this.passwordRules[1].valid = /\d/.test(value);
     this.passwordRules[2].valid = /[A-Z]/.test(value);
   }
+
   // Métodos para obtener los controles del formulario
   get name() {
     return this.registerForm.get('name');
@@ -86,11 +90,12 @@ export class Register implements AfterViewInit, OnDestroy {
   get confirmPassword() {
     return this.registerForm.get('confirmPassword');
   }
+
   signup() {
     if (this.registerForm.valid) {
-      const { confirmPassword, ...signupData } = this.registerForm.value;  // 👈 confirmPassword queda afuera
+      const { confirmPassword, ...signupData } = this.registerForm.value;
 
-      console.log("Datos a enviar:", signupData);  // Asegurate de que aquí NO aparezca confirmPassword
+      console.log("Datos a enviar:", signupData);
 
       this.authSignupService.signup(signupData as SignupRequest).subscribe({
         next: (userData) => {
@@ -103,7 +108,7 @@ export class Register implements AfterViewInit, OnDestroy {
         },
         complete: () => {
           console.info("Signup está completo");
-          this.router.navigateByUrl('/home/inicio');
+          this.router.navigateByUrl('/inicio');
           this.registerForm.reset();
         }
       });
@@ -114,6 +119,7 @@ export class Register implements AfterViewInit, OnDestroy {
   passwordMatchValidator(formGroup: FormGroup) {
     return formGroup.get('password')?.value === formGroup.get('confirmPassword')?.value ? null : { mismatch: true };
   }
+
   // Botón para enviar el formulario
   onSubmit(event: Event) {
     if (this.registerForm.valid) {
@@ -132,20 +138,24 @@ export class Register implements AfterViewInit, OnDestroy {
       console.error("Formulario inválido");
     }
   }
-  showPassword = false;
+
   // Método para cambiar la visibilidad de la contraseña
+  showPassword = false;
+
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
   onEmailInput() {
     this.showSuggestions = true;
   }
+
   // Sugerencia de correo electrónico
   applySuggestion(suffix: string) {
     const value = this.email?.value?.split('@')[0] || '';
     this.email?.setValue(value + suffix);
     this.showSuggestions = false;
   }
+  
   // Ocultar sugerencias de correo electrónico
   hideSuggestions() {
     setTimeout(() => this.showSuggestions = false, 200);

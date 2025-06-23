@@ -28,7 +28,7 @@ export class PedidosCliente implements OnInit {
 obtenerPedidosCliente(): void {
   const usuario = this.authlogin.currentUserData.value;
   console.log('Usuario para consulta de pedidos:', usuario);
-  const userId = usuario.id || usuario.user_id; // Soporta ambos casos
+  const userId = usuario.id || usuario.user_id;
   if (!usuario || !userId) {
     this.pedidos = [];
     return;
@@ -36,7 +36,7 @@ obtenerPedidosCliente(): void {
   this.pedidoService.getPedidosPorUsuario(userId).subscribe({
     next: (data) => {
       this.pedidos = data;
-      this.cdr.detectChanges(); // <--- fuerza actualización de la vista
+      this.cdr.detectChanges();
     },
     error: (err) => {
       console.error('Error al obtener pedidos del cliente:', err);

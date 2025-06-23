@@ -86,20 +86,20 @@
             <div class="navbar-collapse collapse">
                 <ul class="navbar-nav ms auto">
                     <li class="nav-item dropdown">
-                        <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                        <a data-bs-toggle="dropdown" class="nav-icon pe-md-0" tabindex="-1" aria-disabled="true">
                             <i class="fa-solid fa-circle-user"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end rounded-0 border-0 shadow mt-3">
-                            <a href="#" class="dropdown-item">
+                            <a class="dropdown-item" tabindex="-1" aria-disabled="true">
                                 <i class="fa-solid fa-database"></i>
                                 <span>Analytics</span>
                             </a>
-                            <a href="#" class="dropdown-item">
+                            <a class="dropdown-item" tabindex="-1" aria-disabled="true">
                                 <i class="fa-solid fa-cog"></i>
                                 <span>Setting</span>
                             </a>
                             <div class="dropdow-divider"></div>
-                            <a href="#" class="dropdown-item">
+                            <a class="dropdown-item" tabindex="-1" aria-disabled="true">
                                 <i class="fa-solid fa-circle-info"></i>
                                 <span>Help Center</span>
                             </a>
@@ -162,7 +162,6 @@
                                     <input type="text" class="form-control" [(ngModel)]="nuevoServicio.duracion"
                                         name="duracion" />
                                 </div>
-
                                 <div class="col-md-4">
                                     <label class="form-label">Clase</label>
                                     <select class="form-select" [(ngModel)]="nuevoServicio.clase" name="clase" required>
@@ -187,6 +186,7 @@
                                     </select>
                                 </div>
                             </ng-container>
+                            <!-- Botones -->
                             <div class="col-12">
                                 <button class="btn btn-primary" type="button" (click)="guardarServicio()">
                                     {{ idEditando !== null ? 'Actualizar' : 'Agregar' }}
@@ -198,7 +198,6 @@
                     </div>
                 </div>
                 <!-- Tabla de Producto -->
-
                 <div class="d-flex align-items-center gap-3 mb-3">
                     <label for="categoriaSelect" class="form-label mb-0">
                         <strong>Filtrar por categoría:</strong>
@@ -213,7 +212,6 @@
                         <option value="excursion">Excursiones</option>
                     </select>
                 </div>
-
                 <div class="card-body table-responsive">
                     <table class="table table-bordered table-hover">
                         <thead class="table-light">
@@ -248,7 +246,7 @@
                 </div>
             </div>
         </main>
-
+        <!-- Footer -->
         <footer class="footer">
             <div class="container-fluid">
                 <div class="row text-body-secondary">

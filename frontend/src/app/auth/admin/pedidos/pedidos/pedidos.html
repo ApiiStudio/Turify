@@ -87,20 +87,20 @@
             <div class="navbar-collapse collapse">
                 <ul class="navbar-nav ms auto">
                     <li class="nav-item dropdown">
-                        <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                        <a data-bs-toggle="dropdown" class="nav-icon pe-md-0" tabindex="-1" aria-disabled="true">
                             <i class="fa-solid fa-circle-user"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end rounded-0 border-0 shadow mt-3">
-                            <a href="#" class="dropdown-item">
+                            <a class="dropdown-item" tabindex="-1" aria-disabled="true">
                                 <i class="fa-solid fa-database"></i>
                                 <span>Analytics</span>
                             </a>
-                            <a href="#" class="dropdown-item">
+                            <a class="dropdown-item" tabindex="-1" aria-disabled="true">
                                 <i class="fa-solid fa-cog"></i>
                                 <span>Setting</span>
                             </a>
                             <div class="dropdow-divider"></div>
-                            <a href="#" class="dropdown-item">
+                            <a class="dropdown-item" tabindex="-1" aria-disabled="true">
                                 <i class="fa-solid fa-circle-info"></i>
                                 <span>Help Center</span>
                             </a>
@@ -175,8 +175,8 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Panel de pedidos -->
                         <h2 class="mb-4">Panel de Pedidos</h2>
-
                         <div class="container-fluid mt-4">
                             <h2 class="mb-3">Panel de Pedidos Pendientes</h2>
                             <table class="table table-bordered table-striped">
@@ -197,10 +197,10 @@
                                         <td>${{ pedido.monto_total }}</td>
                                         <td>
                                             <span [ngClass]="{
-            'text-warning': pedido.estado === 'pendiente',
-            'text-success': pedido.estado === 'completo',
-            'text-danger': pedido.estado === 'anulado'
-          }">
+                                                'text-warning': pedido.estado === 'pendiente',
+                                                'text-success': pedido.estado === 'completo',
+                                                'text-danger': pedido.estado === 'anulado'
+                                            }">
                                                 {{ pedido.estado }}
                                             </span>
                                         </td>
@@ -223,7 +223,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-
+                            <!-- Historial de Pedidos -->
                             <h2 class="mt-5 mb-3">Historial de Pedidos</h2>
                             <table class="table table-bordered table-striped">
                                 <thead>
@@ -258,8 +258,6 @@
                                 </tbody>
                             </table>
                         </div>
-
-
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
                         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
                             integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"

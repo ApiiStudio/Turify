@@ -15,7 +15,7 @@ export class AdminGuard implements CanActivate {
       return true;
     }
 
-    // 🔒 No autorizado → redirigir a inicio o login
+    // Redirigir no autorizados
     this.router.navigate(['/restringido']);
     return false;
   }

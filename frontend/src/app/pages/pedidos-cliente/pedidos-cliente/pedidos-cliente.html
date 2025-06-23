@@ -1,13 +1,13 @@
 <app-header></app-header>
 <app-nav></app-nav>
+<!-- Tabla pedidos -->
 <div class="container mt-4">
     <h2 class="mb-4">Mis Pedidos</h2>
     <table class="table table-bordered table-striped table-hover">
         <thead>
             <tr>
                 <th>Número</th>
-                <th>Categoría</th>
-                <th>Nombre Servicio</th>
+                <th>ID Producto</th>
                 <th>Monto Total</th>
                 <th>Estado</th>
                 <th>Fecha</th>
@@ -18,7 +18,6 @@
             @for (pedido of pedidos; track pedido.id) {
             <tr>
                 <td>{{ pedido.numero_pedido }}</td>
-                <td>{{ pedido.categoria }}</td>
                 <td>{{ pedido.servicio_id }}</td>
                 <td>${{ pedido.monto_total }}</td>
                 <td>
@@ -41,7 +40,6 @@
                     }
                 </td>
             </tr>
-
             }
             @if (pedidos.length === 0) {
             <tr>

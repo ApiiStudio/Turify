@@ -1,5 +1,6 @@
 <app-header></app-header>
 <div class="body">
+  <!-- Filtro Categorías -->
   <div class="categorias">
     @for (cat of categorias; track cat) {
     <button (click)="seleccionarCategoria(cat)" [class.activa]="cat === categoriaSeleccionada">
@@ -7,67 +8,63 @@
     </button>
     }
   </div>
-  
+  <!-- Cards Productos -->
   <div class="contenedor-cards">
-      <!--@for (producto of productosFiltrados; track producto.id) {-->
-        <div class="producto-card" *ngFor="let producto of productosFiltrados; trackBy: trackById">
-          <div class="card-producto d-flex flex-column justify-content-between">
-            <h5 class="card-title">{{ producto.nombre }}</h5>
-
-            <div class="info-text">
-              <i class="fa-solid fa-list"></i>
-              <span>Categoria: {{ producto.categoria }}</span>
-            </div>
-
-            <div class="info-text">
-              <i class="fa-solid fa-circle-info"></i>
-              <span>Descripcion: {{ producto.descripcion }}</span>
-            </div>
-
-            @if (producto.categoria === 'paquete'){
-            <div class="info-text">
-              <i class="fa fa-moon"></i><span>Noches: {{ producto.noches }}</span>
-            </div>
-            <div class="info-text">
-              <i class="fa-solid fa-users"></i><span>Personas: {{ producto.personas }}</span>
-            </div>
-            }
-            @if (producto.categoria === 'vuelo'){
-            <div class="info-text">
-              <i class="fa-solid fa-clock"></i><span>Duración: {{ producto.duracion }}</span>
-            </div>
-            <div class="info-text">
-              <i class="fa-solid fa-star"></i><span>Clase: {{ producto.clase }}</span>
-            </div>
-            }
-            @if (producto.categoria === 'alojamiento'){
-            <div class="info-text">
-              <i class="fa fa-moon"></i><span>Noches: {{ producto.noches }}</span>
-            </div>
-            <div class="info-text">
-              <i class="fa-solid fa-users"></i><span>Personas: {{ producto.personas }}</span>
-            </div>
-            }
-            @if (producto.categoria === 'auto'){
-            <div class="info-text">
-              <i class="fa-solid fa-star"></i><span>Gama: {{ producto.gama }}</span>
-            </div>
-            <div class="info-text">
-              <i class="fa-solid fa-calendar-days"></i><span>Días: {{ producto.dias }}</span>
-            </div>
-            }
-            <div class="info-text">
-              <i class="fa fa-dollar-sign"></i>
-              <span>Precio: ${{ producto.precio }}</span>
-            </div>
-            @if (userLoginOn) {
-            <button href="#" (click)="agregarProducto(producto)" class="btn btn-primary mt-3">
-              <i class="fa fa-plus"></i> Agregar al Carrito
-            </button>
-            }
-          </div>
+    <!--@for (producto of productosFiltrados; track producto.id) {-->
+    <div class="producto-card" *ngFor="let producto of productosFiltrados; trackBy: trackById">
+      <div class="card-producto d-flex flex-column justify-content-between">
+        <h5 class="card-title">{{ producto.nombre }}</h5>
+        <div class="info-text">
+          <i class="fa-solid fa-list"></i>
+          <span>Categoria: {{ producto.categoria }}</span>
         </div>
+        <div class="info-text">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>Descripcion: {{ producto.descripcion }}</span>
+        </div>
+        @if (producto.categoria === 'paquete'){
+        <div class="info-text">
+          <i class="fa fa-moon"></i><span>Noches: {{ producto.noches }}</span>
+        </div>
+        <div class="info-text">
+          <i class="fa-solid fa-users"></i><span>Personas: {{ producto.personas }}</span>
+        </div>
+        }
+        @if (producto.categoria === 'vuelo'){
+        <div class="info-text">
+          <i class="fa-solid fa-clock"></i><span>Duración: {{ producto.duracion }}</span>
+        </div>
+        <div class="info-text">
+          <i class="fa-solid fa-star"></i><span>Clase: {{ producto.clase }}</span>
+        </div>
+        }
+        @if (producto.categoria === 'alojamiento'){
+        <div class="info-text">
+          <i class="fa fa-moon"></i><span>Noches: {{ producto.noches }}</span>
+        </div>
+        <div class="info-text">
+          <i class="fa-solid fa-users"></i><span>Personas: {{ producto.personas }}</span>
+        </div>
+        }
+        @if (producto.categoria === 'auto'){
+        <div class="info-text">
+          <i class="fa-solid fa-star"></i><span>Gama: {{ producto.gama }}</span>
+        </div>
+        <div class="info-text">
+          <i class="fa-solid fa-calendar-days"></i><span>Días: {{ producto.dias }}</span>
+        </div>
+        }
+        <div class="info-text">
+          <i class="fa fa-dollar-sign"></i>
+          <span>Precio: ${{ producto.precio }}</span>
+        </div>
+        @if (userLoginOn) {
+        <button href="#" (click)="agregarProducto(producto)" class="btn btn-primary mt-3">
+          <i class="fa fa-plus"></i> Agregar al Carrito
+        </button>
+        }
       </div>
-      <!---->
     </div>
-  <app-footer></app-footer>
+  </div>
+</div>
+<app-footer></app-footer>

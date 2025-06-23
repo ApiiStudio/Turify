@@ -8,17 +8,17 @@ import { LoginRequest } from '../../services/auth-login/loginRequest';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink, Footer, ],
+  imports: [ReactiveFormsModule, RouterLink, Footer,],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
 export class Login implements AfterViewInit, OnDestroy {
-  loginError:string="";
+  loginError: string = "";
   loginForm: FormGroup;
   showSuggestions = false;
   emailSuggestions = ['@gmail.com', '@outlook.com', '@hotmail.com', '@yahoo.com', '@icloud.com'];
 
-  constructor(private formBuilder: FormBuilder, private authLogin:AuthLogin, private router:Router) {
+  constructor(private formBuilder: FormBuilder, private authLogin: AuthLogin, private router: Router) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
@@ -32,8 +32,8 @@ export class Login implements AfterViewInit, OnDestroy {
     return this.loginForm.get('password');
   }
 
-  login(){
-    if(this.loginForm.valid){
+  login() {
+    if (this.loginForm.valid) {
       this.authLogin.login(this.loginForm.value as LoginRequest).subscribe({
         next: (userData) => {
           console.log("datos del servio")
@@ -44,12 +44,12 @@ export class Login implements AfterViewInit, OnDestroy {
         },
         error: (errorData) => {
           console.error(errorData);
-          this.loginError=errorData;
+          this.loginError = errorData;
         },
         complete: () => {
-          console.info("Login está completo"); 
-                this.router.navigateByUrl('/home/inicio');
-      this.loginForm.reset();
+          console.info("Login está completo");
+          this.router.navigateByUrl('/inicio');
+          this.loginForm.reset();
         }
       })
     }
@@ -59,6 +59,7 @@ export class Login implements AfterViewInit, OnDestroy {
   onEmailInput() {
     this.showSuggestions = true;
   }
+
   //Ocultar sugerencias email
   hideSuggestions() {
     this.showSuggestions = false;
@@ -83,17 +84,21 @@ export class Login implements AfterViewInit, OnDestroy {
   ngOnDestroy() {
     document.removeEventListener('mousedown', this.clickListener);
   }
+  
   //Aplicar sugerencia al email
   applySuggestion(suffix: string) {
     const value = this.email?.value?.split('@')[0] || '';
     this.email?.setValue(value + suffix);
     this.showSuggestions = false;
   }
+
+    // Método para cambiar la visibilidad de la contraseña
   showPassword = false;
-  // Método para cambiar la visibilidad de la contraseña
+
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
+
   // Método para validar los requisitos de la contraseña
   onPasswordInput(): void {
     const value: string = this.loginForm.get('password')?.value || '';
@@ -101,7 +106,8 @@ export class Login implements AfterViewInit, OnDestroy {
     this.passwordRules[1].valid = /\d/.test(value);
     this.passwordRules[2].valid = /[A-Z]/.test(value);
   }
-    // Requisitos de la contraseña
+  
+  // Requisitos de la contraseña
   passwordRules = [
     { label: 'Al menos 8 caracteres', valid: false },
     { label: 'Al menos 1 número', valid: false },

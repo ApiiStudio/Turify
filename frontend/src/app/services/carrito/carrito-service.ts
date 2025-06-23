@@ -9,11 +9,13 @@ export class CarritoService {
   private listCarrito: Carrito[] = [];
   private descuentoActivo: boolean = false;
 
+  // Obtiene Carrito
   getCarrito() {
     this.obtenerSesion();
     return this.listCarrito;
   }
 
+  // Agrega Productos
   agregarProducto(producto: Producto, cantidad: number = 1) {
     this.obtenerSesion();
     const index = this.listCarrito.findIndex(item => item.producto.id == producto.id);
@@ -27,6 +29,7 @@ export class CarritoService {
     this.guardarSesion();
   }
 
+  // Actualiza
   actualizar(index: number, cantidad: number) {
     if (index >= 0 && index < this.listCarrito.length) {
       this.listCarrito[index].cantidad = cantidad;
@@ -34,11 +37,13 @@ export class CarritoService {
     }
   }
 
+  // Obtiene Cantidad
   cantidad() {
     this.obtenerSesion();
     return this.listCarrito.length
   }
 
+  // Obtiene el Total
   total() {
     const total = this.listCarrito.reduce((sum, item) =>
       sum + item.producto.precio * item.cantidad, 0
@@ -46,6 +51,7 @@ export class CarritoService {
     return total;
   }
 
+  // Elimina Productos del Carrito
   eliminar(index: number) {
     if (index >= 0 && index < this.listCarrito.length) {
       this.listCarrito.splice(index, 1);
@@ -53,10 +59,12 @@ export class CarritoService {
     }
   }
 
+  // Guarda la sesión
   guardarSesion() {
     localStorage.setItem('carrito', JSON.stringify(this.listCarrito));
   }
 
+  // Obtiene la sesión
   obtenerSesion() {
     this.listCarrito = [];
     if (typeof window != 'undefined' && window.localStorage) {
@@ -67,19 +75,22 @@ export class CarritoService {
     }
   }
 
+  // Impuestos del 21%
   impuestos(): number {
     const subtotal = this.total();
     return subtotal * 0.21;
   }
 
+  // Total + Impuestos
   totalConImpuestos(): number {
     return this.totalConDescuento() + this.impuestos();
   }
-
+  
   setDescuentoActivo(activo: boolean) {
     this.descuentoActivo = activo;
   }
 
+  // Descuento
   descuento(): number {
     if (this.descuentoActivo) {
       const subtotal = this.total();
@@ -88,8 +99,9 @@ export class CarritoService {
     return 0;
   }
 
+  // Total + Descuento
   totalConDescuento(): number {
     return this.total() - this.descuento();
   }
-
+  
 }

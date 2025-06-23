@@ -1,4 +1,5 @@
 <div class="wrapper">
+    <!-- Sidebar -->
     <aside id="sidebar">
         <div class="d-flex justify-content-between p-4">
             <div class="sidebar-logo">
@@ -69,6 +70,7 @@
         </div>
     </aside>
     <div class="main">
+        <!-- Navbar -->
         <nav class="navbar navbar-expand px-4 py-3">
             <form action="#" class="d-non d-sm-inline-block">
                 <div class="input-group input-group-navbar">
@@ -82,20 +84,20 @@
             <div class="navbar-collapse collapse">
                 <ul class="navbar-nav ms auto">
                     <li class="nav-item dropdown">
-                        <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                        <a data-bs-toggle="dropdown" class="nav-icon pe-md-0" tabindex="-1" aria-disabled="true">
                             <i class="fa-solid fa-circle-user"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end rounded-0 border-0 shadow mt-3">
-                            <a href="#" class="dropdown-item">
+                            <a class="dropdown-item" tabindex="-1" aria-disabled="true">
                                 <i class="fa-solid fa-database"></i>
                                 <span>Analytics</span>
                             </a>
-                            <a href="#" class="dropdown-item">
+                            <a class="dropdown-item" tabindex="-1" aria-disabled="true">
                                 <i class="fa-solid fa-cog"></i>
                                 <span>Setting</span>
                             </a>
                             <div class="dropdow-divider"></div>
-                            <a href="#" class="dropdown-item">
+                            <a class="dropdown-item" tabindex="-1" aria-disabled="true">
                                 <i class="fa-solid fa-circle-info"></i>
                                 <span>Help Center</span>
                             </a>
@@ -108,22 +110,20 @@
             <div class="container-fluid">
                 <div class="mb-3">
                     <h3 class="fw-bold fs-4 mb-3">Admin Dashboard</h3>
+                    <!-- Cards -->
                     <div class="row">
                         <div class="col-12 col-md-4">
                             <div class="card shadow">
                                 <div class="card-body py-4">
                                     <h6 class="mb-2 fw-bold">
-                                        Member Progress
+                                        Perdidas
                                     </h6>
                                     <p class="fw-bold mb-2">
-                                        $100,000
+                                        ${{ getMontoTotalPorEstado('anulado') | number:'1.0-0' }}
                                     </p>
                                     <div class="mb-0">
-                                        <span class="bagde text-success me-2">
-                                            +9.0%
-                                        </span>
-                                        <span class="fw-bold">
-                                            Since Last Month
+                                        <span class="bagde text-danger me-2 fw-bold">
+                                            Pedidos anulados
                                         </span>
                                     </div>
                                 </div>
@@ -133,17 +133,14 @@
                             <div class="card shadow">
                                 <div class="card-body py-4">
                                     <h6 class="mb-2 fw-bold">
-                                        Member Progress
+                                        A cobrar
                                     </h6>
                                     <p class="fw-bold mb-2">
-                                        $100,000
+                                        ${{ getMontoTotalPorEstado('pendiente') | number:'1.0-0' }}
                                     </p>
                                     <div class="mb-0">
-                                        <span class="bagde text-success me-2">
-                                            +9.0%
-                                        </span>
-                                        <span class="fw-bold">
-                                            Since Last Month
+                                        <span class="bagde text-warning me-2 fw-bold">
+                                            Pedidos pendientes
                                         </span>
                                     </div>
                                 </div>
@@ -153,23 +150,21 @@
                             <div class="card shadow">
                                 <div class="card-body py-4">
                                     <h6 class="mb-2 fw-bold">
-                                        Member Progress
+                                        Cobrados
                                     </h6>
                                     <p class="fw-bold mb-2">
-                                        $100,000
+                                        ${{ getMontoTotalPorEstado('completo') | number:'1.0-0' }}
                                     </p>
                                     <div class="mb-0">
-                                        <span class="bagde text-success me-2">
-                                            +9.0%
-                                        </span>
-                                        <span class="fw-bold">
-                                            Since Last Month
+                                        <span class="bagde text-success fw-bold me-2">
+                                            Pedidos completados
                                         </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- Tabla de Usuarios con rol de "admin" -->
                     <div class="row">
                         <div class="col-12 col-md-12">
                             <h3 class="fw-bold fs-4 my-3">Usuarios Autorizados</h3>
@@ -195,9 +190,37 @@
                             </table>
                         </div>
                     </div>
+                    <!-- Tabla de Usuarios Cliente -->
+                    <div class="row">
+                        <div class="col-12 col-md-12">
+                            <h3 class="fw-bold fs-4 my-3">Usuarios Cliente</h3>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr class="highlight">
+                                        <th scope="col-2">#</th>
+                                        <th scope="col-2">Nombre</th>
+                                        <th scope="col-2">Apellido</th>
+                                        <th scope="col-2">Email</th>
+                                        <th scope="col-2">Rol</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let cliente of usuarioCliente">
+                                        <td>{{ cliente.id }}</td>
+                                        <td>{{ cliente.name }}</td>
+                                        <td>{{ cliente.surname }}</td>
+                                        <td>{{ cliente.email }}</td>
+                                        <td>{{ cliente.role }}</td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
+        <!-- Footer -->
         <footer class="footer">
             <div class="cointainer-fluid">
                 <div class="row text-body-secondary">

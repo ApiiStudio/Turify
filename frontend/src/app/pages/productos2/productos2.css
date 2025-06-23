@@ -2,6 +2,7 @@
   padding: 20px;
 }
 
+/* Filtro Categorías */
 .categorias {
   display: flex;
   gap: 10px;
@@ -29,6 +30,7 @@
   font-weight: bold;
 }
 
+/* Cards Productos */ 
 .contenedor-cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

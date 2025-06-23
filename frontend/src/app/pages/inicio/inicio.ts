@@ -4,10 +4,14 @@ import { AuthLogin } from '../../services/auth-login/auth-login';
 import { User } from '../../services/user';
 import { ProductoService2, Producto } from '../../services/producto/producto-service2';
 import { CommonModule } from '@angular/common';
+import { Header } from '../../shared/header/header';
+import { Nav } from '../../shared/nav/nav';
+import { Footer } from '../../shared/footer/footer';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-inicio',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, Header, Nav, Footer,],
   templateUrl: './inicio.html',
   styleUrls: ['./inicio.css']
 })
@@ -20,7 +24,8 @@ export class Inicio implements OnInit {
   autoSlideInterval: any;
   constructor(
     private AuthLogin: AuthLogin,
-    private productoService: ProductoService2
+    private productoService: ProductoService2,
+    private cdr: ChangeDetectorRef,
   ) {
   }
   ngOnInit(): void {
@@ -34,7 +39,8 @@ export class Inicio implements OnInit {
     this.productoService.getProductosApi().subscribe({
       next: (productos) => {
         this.productos = productos || [];
-        this.currentIndex = 0; // Reinicia el índice para evitar errores
+        this.currentIndex = 0;
+        this.cdr.detectChanges();
       },
       error: (err) => console.error('Error al cargar productos:', err)
     });
@@ -43,7 +49,7 @@ export class Inicio implements OnInit {
       if (this.productos.length > 0) {
         this.next();
       }
-    }, 3000); // Cambia a 3 segundos para mejor UX
+    }, 3000);
 
     this.AuthLogin.currentUserData.subscribe({
       next: (userData) => {

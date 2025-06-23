@@ -1,5 +1,5 @@
 <div class="register-wrapper">
-    <a class="navbar-brand margin-left" routerLink="/home/inicio">
+    <a class="navbar-brand margin-left" routerLink="/inicio">
         <img class="logo" src="/imagenes/logo/Logo Positivo.png" alt="Logo Positivo" height="70">
     </a>
     <div class="register-card">
@@ -50,7 +50,6 @@
                 <input type="email" class="form-control" id="exampleInputEmail1" formControlName="email"
                     [attr.autocomplete]="'off'" (focus)="showSuggestions = true" (blur)="hideSuggestions()"
                     (input)="onEmailInput()" />
-
                 <!--Sugerencias-->
                 @if (showSuggestions) {
                 <ul class="email-suggestions-list">
@@ -61,7 +60,6 @@
                     }
                 </ul>
                 }
-
                 <!--Validaciones Email-->
                 @if (email?.touched && email?.hasError('required')) {
                 <p class="text-danger mt-1">El correo electrónico es requerido.</p>
@@ -82,7 +80,7 @@
                 <div class="input-group">
                     <input [type]="showPassword ? 'text' : 'password'" class="form-control" id="exampleInputPassword1"
                         formControlName="password" (input)="onPasswordInput()" />
-                        <!--Visibilidad Contraseña-->
+                    <!--Visibilidad Contraseña-->
                     <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()"
                         tabindex="-1">
                         <i class="fa-solid fa-eye-slash"></i>
@@ -105,10 +103,9 @@
             <div class="mb-3">
                 <label for="exampleInputConfirmPassword1" class="form-label register-label">Confirmar contraseña</label>
                 <div class="input-group">
-                    <input [type]="showPassword ? 'text' : 'password'"
-                        class="form-control @(registerForm.hasError('mismatch') ? 'is-invalid' : '')"
-                        id="exampleInputConfirmPassword1" formControlName="confirmPassword"
-                        (input)="onPasswordInput()" />
+                    <input [type]="showPassword ? 'text' : 'password'" class="form-control" [ngClass]="{
+                        'is-invalid': (confirmPassword?.touched || confirmPassword?.dirty) && registerForm.hasError('mismatch')
+                        }" id="exampleInputConfirmPassword1" formControlName="confirmPassword" (input)="onPasswordInput()" />
                 </div>
                 @if (confirmPassword?.errors && confirmPassword?.touched) {
                 @if (confirmPassword?.hasError('required')) {

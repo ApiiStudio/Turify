@@ -15,10 +15,12 @@
                 <div class="footer-content margin-right">
                     <h5>Enlaces útiles</h5>
                     <ul class="text-decoration-none">
-                        <li><a class="text-decoration-none" href="/home/aboutUs">Sobre Nosotros</a></li>
-                        <li><a class="text-decoration-none" href="/home/packages">Paquetes Turísticos</a></li>
-                        <li><a class="text-decoration-none" href="/home/flights">Vuelos</a></li>
-                        <li><a class="text-decoration-none" href="/home/accommodation">Alojamiento</a></li>
+                        <li><a class="text-decoration-none" routerLink="/inicio/sobre-nosotros">Sobre Nosotros</a></li>
+                        <li><a class="text-decoration-none" [routerLink]="['/productos']" [queryParams]="{ categoria: 'paquete'}">Paquetes Turísticos</a></li>
+                        <li><a class="text-decoration-none" [routerLink]="['/productos']" [queryParams]="{ categoria: 'vuelo'}">Vuelos</a></li>
+                        <li><a class="text-decoration-none" [routerLink]="['/productos']" [queryParams]="{ categoria: 'alojamiento'}">Alojamiento</a></li>
+                        <li><a class="text-decoration-none" [routerLink]="['/productos']" [queryParams]="{ categoria: 'auto'}">Alquiler de auto</a></li>
+                        <li><a class="text-decoration-none" [routerLink]="['/productos']" [queryParams]="{ categoria: 'excursion'}">Excursiones</a></li>
                     </ul>
                 </div>
             </div>
@@ -26,11 +28,11 @@
                 <div class="footer-content">
                     <h5>Síguenos</h5>
                     <ul class="social-links">
-                        <li><a class="text-decoration-none" href="https://www.facebook.com/escuela713/" target="_blank"
+                        <li><a class="text-decoration-none" href="https://www.facebook.com/escuela713?locale=es_LA" target="_blank"
                                 rel="noopener noreferrer">Facebook</a></li>
                         <li><a class="text-decoration-none" href="https://www.twitter.com/escuela713/" target="_blank"
                                 rel="noopener noreferrer">Twitter</a></li>
-                        <li><a class="text-decoration-none" href="https://www.instagram.com/escuela713/" target="_blank"
+                        <li><a class="text-decoration-none" href="https://www.instagram.com/laradiodela713/" target="_blank"
                                 rel="noopener noreferrer">Instagram</a></li>
                     </ul>
                 </div>

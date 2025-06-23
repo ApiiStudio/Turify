@@ -3,7 +3,7 @@
 <div class="container-fluid mt-3">
     <h5>Mi Carrito</h5>
     <hr>
-
+    <!-- Card Productos -->
     <div class="row">
         <div class="col-sm-9">
             <div class="card">
@@ -39,7 +39,6 @@
                                     </td>
                                 </tr>
                                 }
-
                                 @if (listCarrito.length == 0) {
                                 <tr>
                                     <td colspan="6" class="text-center">No hay productos.</td>
@@ -51,27 +50,29 @@
                 </div>
             </div>
             <br>
-<div class="col-sm-5">
-    <div class="card">
-        <div class="card-body">
-            <h5>Descuento</h5>
-            <form (ngSubmit)="aplicarCupon()">
-                <div class="input-group">
-                    <input class="form-control" type="text" autocomplete="off" placeholder="Ingrese el cupon de descuento"
-                        [(ngModel)]="cupon" name="cupon">
-                    <button class="btn btn-success" type="submit">Aplicar</button>
+            <!-- Card Descuento -->
+            <div class="col-sm-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Descuento</h5>
+                        <form (ngSubmit)="aplicarCupon()">
+                            <div class="input-group">
+                                <input class="form-control" type="text" autocomplete="off"
+                                    placeholder="Ingrese el cupon de descuento" [(ngModel)]="cupon" name="cupon">
+                                <button class="btn btn-success" type="submit">Aplicar</button>
+                            </div>
+                            <div *ngIf="cuponAplicado" class="text-success mt-2">
+                                ¡Cupón aplicado! 10% de descuento.
+                            </div>
+                            <div *ngIf="cuponInvalido" class="text-danger mt-2">
+                                Cupón inválido.
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div *ngIf="cuponAplicado" class="text-success mt-2">
-                    ¡Cupón aplicado! 10% de descuento.
-                </div>
-                <div *ngIf="cuponInvalido" class="text-danger mt-2">
-                    Cupón inválido.
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
-</div>
-        </div>
+        <!-- Resumen -->
         <div class="col-sm-3">
             <div class="card">
                 <div class="card-body">
@@ -104,9 +105,8 @@
                             </div>
                         </button>
                         <div class="mb-3 text-center">
-                            <p class="login-text mb-1 d-inline">
-                                o
-                                <a routerLink="/productos2" class="login-link ms-2">seguir comprando</a>
+                            <p class="login-text mb-1 d-inline"> o
+                                <a routerLink="/productos" class="login-link ms-2">seguir comprando</a>
                             </p>
                         </div>
                     </div>

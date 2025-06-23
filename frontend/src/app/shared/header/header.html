@@ -1,7 +1,7 @@
 <!--Header-->
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand margin-left" routerLink="/home/inicio">
+        <a class="navbar-brand margin-left" routerLink="/inicio">
             <img class="logo" src="/imagenes/logo/Logo Positivo.png" alt="Logo Positivo" height="50">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -11,10 +11,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" routerLink="/home/inicio">Inicio</a>
+                    <a class="nav-link active" aria-current="page" routerLink="/inicio">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/home/sobre-nosotros">Sobre Nosotros</a>
+                    <a class="nav-link" routerLink="/sobre-nosotros">Sobre Nosotros</a>
                 </li>
                 @if (isAdmin) {
                 <li class="nav-item">
@@ -23,47 +23,44 @@
                 }
             </ul>
             <!--Carrito-->
-            <ul class="navbar-nav ms-auto mb-3 mb-lg-0 margin-right">
-                @if (userLoginOn) {
-                <li class="nav-item register-item">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 margin-right">
+                @if (userLoginOn && userData && userData.email) {
+                <!-- Carrito -->
+                <li class="nav-item">
                     <a class="nav-link cart-link ms-2" routerLink="/carrito">
                         <i class="fa-solid fa-cart-shopping"></i>
-                        (<span>{{carritoService.cantidad()}}</span>)
+                        (<span>{{ carritoService.cantidad() }}</span>)
                     </a>
                 </li>
-                <!-- Cuenta -->
-                <div class="navbar-collapse collapse">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item dropdown">
-                            <a href="#" data-bs-toggle="dropdown" class="nav-link ms-2 d-flex align-items-center gap-2">
-                                <i class="fa-solid fa-user fs-5"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end rounded shadow-sm mt-3 p-2 bg-light border-0"
-                                style="min-width: 200px;">
-                                <div class="px-3 py-2">
-                                    <h6 class="mb-0 fw-semibold">¡Bienvenido, {{userName}}!</h6>
-                                </div>
-                                <hr class="my-1">
-                                <a routerLink="/pedidos-cliente" class="dropdown-item d-flex align-items-center gap-2 text-secondary">
-                                    <i class="fa-solid fa-life-ring"></i>
-                                    <span>Pedidos</span>
-                                </a>
-                                <a href="#" class="dropdown-item d-flex align-items-center gap-2 text-secondary"
-                                    (click)="logout()">
-                                    <i class="fa-solid fa-right-from-bracket"></i>
-                                    <span>Salir</span>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                }
-                @if (!userLoginOn) {
+                <!-- Cuenta del usuario -->
+                <li class="nav-item dropdown">
+                    <a href="#" data-bs-toggle="dropdown" class="nav-link ms-2 d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-user fs-5"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end rounded shadow-sm mt-3 p-2 bg-light border-0"
+                        style="min-width: 200px">
+                        <div class="px-3 py-2">
+                            <h6 class="mb-0 fw-semibold">¡Bienvenido, {{ userName }}!</h6>
+                        </div>
+                        <hr class="my-1" />
+                        <a routerLink="/pedidos-cliente"
+                            class="dropdown-item d-flex align-items-center gap-2 text-secondary">
+                            <i class="fa-solid fa-life-ring"></i>
+                            <span>Pedidos</span>
+                        </a>
+                        <a href="#" class="dropdown-item d-flex align-items-center gap-2 text-secondary"
+                            (click)="logout()">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <span>Salir</span>
+                        </a>
+                    </div>
+                </li>
+                } @else {
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/login">Iniciar Sesión</a>
                 </li>
                 <li class="nav-item register-item margin-right">
-                    <a class="nav-link register-link ms-2 " routerLink="/register">Registrarse</a>
+                    <a class="nav-link register-link ms-2" routerLink="/register">Registrarse</a>
                 </li>
                 }
             </ul>

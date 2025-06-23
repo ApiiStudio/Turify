@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Header } from '../../../../shared/header/header';
 import { RouterLink } from '@angular/router';
-import { Footer } from '../../../../shared/footer/footer';
 import { Nav } from '../../../../shared/nav/nav';
 import { CommonModule } from '@angular/common';
 import { PedidoService, Pedido } from '../../../../services/pedidos/pedidos-service';
@@ -27,6 +26,7 @@ export class Pedidos implements OnInit {
     this.cargarPedidos();
   }
 
+  //Menú
   ngAfterViewInit() {
     const hamburguer = document.querySelector(".toggle-btn");
     const toggler = document.querySelector("#icon");
@@ -39,6 +39,7 @@ export class Pedidos implements OnInit {
     }
   }
 
+  //Carga Pedidos
   cargarPedidos(): void {
     this.pedidoService.getPedidos().subscribe({
       next: res => {
@@ -52,10 +53,12 @@ export class Pedidos implements OnInit {
     });
   }
 
+  //Localiza Pedido
   trackById(index: number, pedido: Pedido): number {
   return pedido.id;
   }
 
+  //Cambia Estado
   cambiarEstado(pedidoId: number, estado: string): void {
     this.pedidoService.actualizarEstadoPedido(pedidoId, estado).subscribe({
       next: () => {
@@ -65,6 +68,7 @@ export class Pedidos implements OnInit {
     });
   }
 
+  //Anula Pedidos
   anularPedidoAdmin(id: number): void {
     if (confirm('¿Estás seguro de que querés anular este pedido?')) {
       this.pedidoService.anularPedidoAdmin(id).subscribe({
@@ -74,7 +78,8 @@ export class Pedidos implements OnInit {
     }
   }
 
-getTotalesPorEstado(estado: 'pendiente' | 'anulado' | 'completo'): number {
-  return this.pedidos.filter(p => p.estado === estado).length;
-}
+  //Total Pedidos según su Estado
+  getTotalesPorEstado(estado: 'pendiente' | 'anulado' | 'completo'): number {
+    return this.pedidos.filter(p => p.estado === estado).length;
+  }
 }

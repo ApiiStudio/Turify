@@ -1,8 +1,6 @@
-import { Component, Inject, OnInit } from '@angular/core';
-// Update the import path and exported member to match the actual file and export
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { ProductoService2, Producto } from '../../services/producto/producto-service2';
 import { Header } from '../../shared/header/header';
-import { Nav } from '../../shared/nav/nav';
 import { Footer } from '../../shared/footer/footer';
 import { CommonModule } from '@angular/common';
 import { AuthLogin } from '../../services/auth-login/auth-login';
@@ -31,9 +29,9 @@ export class Productos2Component implements OnInit {
     private router: Router,
     private carritoService: CarritoService,
     private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
   ) { }
   
-
   // Inicia el componente y obtiene los productos
   ngOnInit(): void {
     this.AuthLogin.currentUserLoginOn.subscribe({
@@ -48,10 +46,10 @@ export class Productos2Component implements OnInit {
     });
     this.categoriaControl = new FormControl('');
 
-    // 1. Primero obtenemos los productos
+    // Obtiene los Productos
     this.productoService2.getProductosApi().subscribe((productos) => {
       this.productos = productos;
-      // 2. Luego, chequeamos si hay categoría en la URL
+      // Filtro por URL
       const categoria = this.route.snapshot.queryParamMap.get('categoria');
       if (categoria) {
         this.categoriaControl.setValue(categoria);
@@ -62,7 +60,7 @@ export class Productos2Component implements OnInit {
       }
     });
 
-    // 3. Escuchamos cambios en la URL después de la carga inicial
+    // Escucha de cambios en la URL
     this.route.queryParams.subscribe(params => {
       const categoria = params['categoria'];
       if (categoria) {
@@ -74,7 +72,7 @@ export class Productos2Component implements OnInit {
       }
     });
 
-    // 4. Escuchamos cambios en el control
+    // Cambios de control
     this.categoriaControl.valueChanges.subscribe(categoria => {
       this.router.navigate([], {
         relativeTo: this.route,
@@ -88,6 +86,7 @@ export class Productos2Component implements OnInit {
 
   categoriaControl = new FormControl('');
 
+  // Seleccionar Categoría
   seleccionarCategoria(cat: string): void {
   this.categoriaSeleccionada = cat;
   this.router.navigate([], {
@@ -98,6 +97,7 @@ export class Productos2Component implements OnInit {
   this.actualizarFiltrados(cat);
   }
 
+  // Actualizar Filtro
   actualizarFiltrados(categoria: any): void {
     if (!categoria) {
       this.productosFiltrados = [...this.productos];
@@ -107,8 +107,10 @@ export class Productos2Component implements OnInit {
       );
     }
     console.log("se filtran los productos:", categoria, this.productosFiltrados);
+    this.cdr.detectChanges();
   }
 
+  // Agregar Producto Carrito
   agregarProducto(producto: Producto) {
     this.carritoService.agregarProducto(producto, 1);
   }

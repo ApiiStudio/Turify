@@ -211,3 +211,21 @@ body {
 .card:hover {
   transform: scale(1.02);
 }
+
+/* Slider */
+.slider-row {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  overflow: hidden;
+}
+.slider-card {
+  min-width: 33.3333%;
+  box-sizing: border-box;
+  padding: 0 8px;
+}
+@media (max-width: 768px) {
+  .slider-card {
+    min-width: 100%;
+  }
+}

@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { AuthLogin } from '../../../services/auth-login/auth-login';
 import { User } from '../../../services/user';
 import { Pedido, PedidoService } from '../../../services/pedidos/pedidos-service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-admin-navbar',
@@ -18,7 +19,11 @@ export class AdminNavbar implements AfterViewInit, OnInit {
   usuarioCliente: User[] = [];
   pedidos: Pedido[] = [];
 
-  constructor(private authlogin: AuthLogin, private pedidoService: PedidoService) {}
+  constructor(
+    private authlogin: AuthLogin,
+    private pedidoService: PedidoService,
+    private cdRef: ChangeDetectorRef,
+  ) {}
 
   ngOnInit(): void {
     // Cargar usuario actual
@@ -36,9 +41,10 @@ export class AdminNavbar implements AfterViewInit, OnInit {
             name: u.name,
             surname: u.surname,
             email: u.email,
-            role: u.rol // adaptamos propiedad
+            role: u.rol 
           }));
 
+          this.cdRef.detectChanges();
         console.log('🟢 Usuarios filtrados (rol cliente):', this.usuarioCliente);
       },
       error: (err) => {
@@ -50,6 +56,7 @@ export class AdminNavbar implements AfterViewInit, OnInit {
     this.pedidoService.getPedidos().subscribe({
       next: (pedidos) => {
         this.pedidos = pedidos;
+        this.cdRef.detectChanges();
       },
       error: (err) => {
         console.error('❌ Error al obtener pedidos:', err);

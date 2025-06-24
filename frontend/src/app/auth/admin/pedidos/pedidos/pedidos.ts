@@ -63,6 +63,7 @@ export class Pedidos implements OnInit {
     this.pedidoService.actualizarEstadoPedido(pedidoId, estado).subscribe({
       next: () => {
         this.cargarPedidos();
+        this.cdr.detectChanges();
       },
       error: err => console.error('Error al actualizar estado:', err)
     });
@@ -74,7 +75,9 @@ export class Pedidos implements OnInit {
       this.pedidoService.anularPedidoAdmin(id).subscribe({
         next: () => this.cargarPedidos(),
         error: err => alert(err.error?.detail || 'Error al anular el pedido')
+        
       });
+      this.cdr.detectChanges();
     }
   }
 
@@ -82,4 +85,5 @@ export class Pedidos implements OnInit {
   getTotalesPorEstado(estado: 'pendiente' | 'anulado' | 'completo'): number {
     return this.pedidos.filter(p => p.estado === estado).length;
   }
+  
 }

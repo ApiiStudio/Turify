@@ -18,7 +18,7 @@ export class PedidosCliente implements OnInit {
   constructor(
     private pedidoService: PedidoService,
     private authlogin: AuthLogin,
-    private cdr: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -27,16 +27,14 @@ export class PedidosCliente implements OnInit {
 
 obtenerPedidosCliente(): void {
   const usuario = this.authlogin.currentUserData.value;
-  console.log('Usuario para consulta de pedidos:', usuario);
-  const userId = usuario.id || usuario.user_id;
-  if (!usuario || !userId) {
+  if (!usuario || !usuario.id) {
     this.pedidos = [];
     return;
   }
-  this.pedidoService.getPedidosPorUsuario(userId).subscribe({
+  this.pedidoService.getPedidosPorUsuario(usuario.id).subscribe({
     next: (data) => {
       this.pedidos = data;
-      this.cdr.detectChanges();
+      this.cdRef.detectChanges();
     },
     error: (err) => {
       console.error('Error al obtener pedidos del cliente:', err);
@@ -44,10 +42,14 @@ obtenerPedidosCliente(): void {
   });
 }
 
-  anularPedido(pedidoId: number): void {
-    this.pedidoService.anularPedidoAdmin(pedidoId).subscribe({
-      next: () => this.obtenerPedidosCliente(),
-      error: (err) => console.error('Error al anular pedido:', err)
-    });
+anularPedido(pedidoId: number): void {
+  if (!confirm('¿Estás seguro que deseas anular este pedido? Esta acción no se puede deshacer.')) {
+    return;
   }
+  this.pedidoService.anularPedidoAdmin(pedidoId).subscribe({
+    next: () => this.obtenerPedidosCliente(),
+    error: (err) => console.error('Error al anular pedido:', err)
+  });
+  this.cdRef.detectChanges();
+}
 }

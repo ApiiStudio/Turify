@@ -1,59 +1,59 @@
 # App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.1.
+Este proyecto fue generado con Angular [Angular CLI](https://github.com/angular/angular-cli) version 20.0.1.
 
-## Development server
+## Despliegue server local
 
-To start a local development server, run:
+Para el despliegue local:
 
-```bash
+Command Prompt
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Una vez que el servidor este corriendo, abrí tu navegador y pega la URL `http://localhost:4200/`. La aplicación sera actualizada automaticamente cada vez que se haga una modificación en los archivos.
 
 ## Code scaffolding
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Angular CLI incluye herramientas para facilitar al desarrollador. Para generar un nuevo componente:
 
-```bash
+Command prompt
 ng generate component component-name
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Para una lista sobre todas estas herramientas (como pueden ser `components`, `directives`, or `pipes`), correr:
 
-```bash
+Command Prompt
 ng generate --help
-```
 
-## Building
+## Construcción
 
-To build the project run:
+Para construir el projecto:
 
 ```bash
 ng build
 ```
+Esto compilará tu projecto y lo almacenará en el directorio 'dist/'. Por defecto, la producción de las construcciónes optimiza tu aplicación para un mejor performance y velocidad. 
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Despliegue en Firebase Hosting
 
-## Running unit tests
+Este proyecto puede ser desplegado fácilmente en [Firebase Hosting](https://firebase.google.com/products/hosting).
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Pasos básicos para desplegar
 
-```bash
-ng test
-```
+1. **Instala Firebase CLI (si no lo tenés):**
+   ```bash
+   npm install -g firebase-tools
 
-## Running end-to-end tests
+2. **Inicia sesión en Firabase**
+    ```bash
+    firebase login
 
-For end-to-end (e2e) testing, run:
+3. **Inicia Firebase en el proyecto (solo la primera vez)**
+    ```bash
+    firebase init
 
-```bash
-ng e2e
-```
+4. **Despliega a Firebase**
+    ```bash
+    firebase deploy
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Frontend realizado por Vicente Sanchez Calfual - Esquel, Chubut 2025

@@ -6,6 +6,7 @@ import { Producto } from '../producto/producto-service2';
   providedIn: 'root'
 })
 export class CarritoService {
+
   private listCarrito: Carrito[] = [];
   private descuentoActivo: boolean = false;
 
@@ -103,5 +104,8 @@ export class CarritoService {
   totalConDescuento(): number {
     return this.total() - this.descuento();
   }
-  
+
+  vaciar(): void {
+    localStorage.removeItem('carrito');
+  }
 }

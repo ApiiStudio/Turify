@@ -1,0 +1,55 @@
+.status-container {
+    max-width: 600px;
+    margin: 80px auto;
+    text-align: center;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.status-container h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.status-container p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 2rem;
+}
+
+.icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.success .icon {
+    color: #28a745;
+}
+
+.pending .icon {
+    color: #ffc107;
+}
+
+.failed .icon {
+    color: #dc3545;
+}
+
+.btn {
+    background-color: #007bff;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.img {
+    margin: 100px auto;
+    display: block;
+}

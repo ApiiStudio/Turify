@@ -3,6 +3,7 @@
 <!--Tarjeta de Miembros del Equipo-->
 <section class="container my-5">
     <div class="row text-center">
+        <h3><em>"Empezamos con muchas dudas y terminamos con muchas más..."</em></h3>
         @for (member of teamMembers; track member.id)
         {
         <div class="col-md-3">
@@ -11,7 +12,12 @@
                 <div class="card-body">
                     <h3 class="mt-3">{{member.name}}</h3>
                     <p>{{member.role}}</p>
-                    <p>{{member.instagram}}</p>
+                    <p>
+                        <a [href]="'https://instagram.com/' + member.instagram" target="_blank"
+                            rel="noopener noreferrer">
+                            {{ member.instagram }}
+                        </a>
+                    </p>
                 </div>
             </div>
         </div>

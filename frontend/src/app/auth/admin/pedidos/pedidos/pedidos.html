@@ -231,18 +231,16 @@
                                         <th>Número de Pedido</th>
                                         <th>Email del Usuario</th>
                                         <th>Monto Total</th>
+                                        <th>Fecha Creación</th>
                                         <th>Estado</th>
-                                        <th>
-                                            <option value=""></option>
-                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let pedido of pedidosHistoricos; trackBy: trackById">
                                         <td>{{ pedido.numero_pedido }}</td>
-                                        <td>{{ pedido.fecha_creacion }}</td>
                                         <td>{{ pedido.email_usuario }}</td>
                                         <td>${{ pedido.monto_total }}</td>
+                                        <td>{{ pedido.fecha_creacion }}</td>
                                         <td>
                                             <span [ngClass]="{
                                                 'text-success': pedido.estado === 'completo',

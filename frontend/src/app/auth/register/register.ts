@@ -69,9 +69,34 @@ export class Register implements AfterViewInit, OnDestroy {
   // Método para validar los requisitos de la contraseña
   onPasswordInput(): void {
     const value: string = this.registerForm.get('password')?.value || '';
+
+    // Reglas visuales ya existentes
     this.passwordRules[0].valid = value.length >= 8 && value.length <= 128;
     this.passwordRules[1].valid = /\d/.test(value);
     this.passwordRules[2].valid = /[A-Z]/.test(value);
+
+    // Nueva: fuerza
+    this.evaluatePasswordStrength(value);
+  }
+
+  passwordStrength: string = 'débil';
+
+  evaluatePasswordStrength(password: string): void {
+    let score = 0;
+
+    if (password.length >= 8) score++;
+    if (/[A-Z]/.test(password)) score++;
+    if (/[a-z]/.test(password)) score++;
+    if (/\d/.test(password)) score++;
+    if (/[^A-Za-z0-9]/.test(password)) score++; // símbolos
+
+    if (score <= 2) {
+      this.passwordStrength = 'débil';
+    } else if (score === 3 || score === 4) {
+      this.passwordStrength = 'media';
+    } else {
+      this.passwordStrength = 'fuerte';
+    }
   }
 
   // Métodos para obtener los controles del formulario
@@ -99,17 +124,20 @@ export class Register implements AfterViewInit, OnDestroy {
 
       this.authSignupService.signup(signupData as SignupRequest).subscribe({
         next: (userData) => {
-          console.log("datos del servicio");
-          console.log(userData);
-        },
-        error: (errorData) => {
-          console.error(errorData);
-          this.signupError = errorData;
-        },
-        complete: () => {
-          console.info("Signup está completo");
+          console.log("datos del servicio", userData);
           this.router.navigateByUrl('/inicio');
           this.registerForm.reset();
+        },
+        error: (errorData) => {
+          // Manejo robusto para evitar el error de undefined
+          const detalle = errorData?.error?.detail?.toLowerCase?.() || '';
+          if (detalle.includes('ya está registrado')) {
+            this.signupError = 'Este correo electrónico ya está registrado.';
+            this.email?.setErrors({ emailExists: true });
+            this.email?.markAsTouched();
+          } else {
+            this.signupError = 'Ocurrió un error al registrar. Intenta nuevamente.';
+          }
         }
       });
     }
@@ -147,7 +175,15 @@ export class Register implements AfterViewInit, OnDestroy {
   }
   onEmailInput() {
     this.showSuggestions = true;
+    this.signupError = '';
+
+    const errors = this.email?.errors;
+    if (errors && errors['emailExists']) {
+      delete errors['emailExists'];
+      this.email?.setErrors(Object.keys(errors).length ? errors : null);
+    }
   }
+
 
   // Sugerencia de correo electrónico
   applySuggestion(suffix: string) {
@@ -155,7 +191,7 @@ export class Register implements AfterViewInit, OnDestroy {
     this.email?.setValue(value + suffix);
     this.showSuggestions = false;
   }
-  
+
   // Ocultar sugerencias de correo electrónico
   hideSuggestions() {
     setTimeout(() => this.showSuggestions = false, 200);

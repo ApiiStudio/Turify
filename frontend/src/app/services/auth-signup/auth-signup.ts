@@ -27,14 +27,14 @@ export class AuthSignupService {
   }
 
   private handleError(error: HttpErrorResponse) {
-    if (error.status === 0) {
-      console.error('Se ha producido un error', error.error);
-    }
-    else {
-      console.error('Backend retorno el codigo de estado', error.status, error.error);
-    }
-    return throwError(() => Error('Algo falló. Por favor intenta nuevamente'));
+  if (error.status === 0) {
+    console.error('Se ha producido un error:', error.error);
+  } else {
+    console.error('Backend retornó código', error.status, error.error);
   }
+  // En vez de reemplazar, devolvemos el error real
+  return throwError(() => error);
+}
   get userData(): Observable<User> {
     return this.currentUserData.asObservable();
   }

@@ -9,6 +9,9 @@ import { PedidosCliente } from './pages/pedidos-cliente/pedidos-cliente/pedidos-
 import { AdminGuard } from './guards/admin-guard';
 import { Restringido } from './restringido/restringido/restringido';
 import { NotFound } from './pages/not-found/not-found';
+import { Success } from './carrito/pago/success/success/success';
+import { Pending } from './carrito/pago/pending/pending/pending';
+import { Failure } from './carrito/pago/failure/failure/failure';
 
 export const routes: Routes = [
     // Público
@@ -21,6 +24,9 @@ export const routes: Routes = [
     {path:"carrito", component:Cart},
     {path:"pedidos-cliente", component:PedidosCliente},
     {path:"restringido", component:Restringido},
+    {path: "success", component:Success},
+    {path: "pending", component:Pending},
+    {path: "failure", component:Failure},
     // Privado
     {path:'admin', canActivate: [AdminGuard], loadComponent: () => import('./auth/admin/admin/admin').then(m => m.Admin)},
     {path:'servicios', canActivate: [AdminGuard], loadComponent: () => import('./auth/admin/servicios/servicios').then(m => m.Servicios)},

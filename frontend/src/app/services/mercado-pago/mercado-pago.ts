@@ -9,7 +9,7 @@ import { Carrito } from '../../carrito/core/carrito';
 export class MercadoPago {
   private apiURL = 'https://turifyback.onrender.com';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   createPreference(
     carrito: Carrito[],
@@ -17,7 +17,7 @@ export class MercadoPago {
     direccion: string,
     numeroPedido: string,
   ): Observable<any> {
-    const body = {
+    const body: any = {
       pedido_numero: numeroPedido,
       user_id: usuario.id,
       email: usuario.email,
@@ -29,6 +29,9 @@ export class MercadoPago {
         precio_unitario: +(p.producto.precio * 1.21).toFixed(2)
       }))
     };
+
+    console.log('✅ Body enviado a /pago:', body);
+
     return this.http.post(`${this.apiURL}/pago`, body);
   }
 }

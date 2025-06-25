@@ -97,73 +97,75 @@ export class Cart implements OnInit {
     this.numeroPedido = 'PED' + Math.floor(Math.random() * 100000);
 
     // Paso 1: generar preferencia en Mercado Pago
+    const montoFinal = this.carritoService.totalConImpuestos();
+
     this.mercadoPagoService.createPreference(
       this.listCarrito,
       { id: this.userId, email: this.userEmail },
       this.direccion,
-      this.numeroPedido
+      this.numeroPedido,
     ).subscribe({
-      next: (res) => {
-        const initPoint = res.init_point;
-        if (!initPoint) {
-          alert('No se pudo obtener el enlace de pago.');
-          return;
-        }
-
-        // Paso 2: abrir ventana de pago
-        const pagoVentana = window.open(initPoint, '_blank');
-        if (!pagoVentana) {
-          alert('Permita ventanas emergentes para completar el pago.');
-          return;
-        }
-
-        // Paso 3: solo si el pago se completa, crear pedido y detalles
-        // Simulación: en entorno real usarías Webhooks/IPN
-        // Aquí asumimos que si se abrió, se paga (solo para test)
-
-        const pedido: Pedido = {
-          id: 0,
-          user_id: this.userId,
-          servicio_id: this.listCarrito[0].producto.id, // opcional si se guarda en detalles
-          numero_pedido: this.numeroPedido,
-          monto_total: this.carritoService.totalConImpuestos(),
-          estado: 'pendiente',
-          fecha_creacion: fechaActual,
-          direccion_entrega: this.direccion,
-          email_usuario: this.userEmail,
-        };
-
-        this.pedidoService.crearPedido(pedido).subscribe({
-          next: (res) => {
-            const pedido_id = res.id || res.pedido_id;
-            const detalles: DetallePedido[] = this.listCarrito.map(item => ({
-              pedido_id,
-              servicio_id: item.producto.id,
-              cantidad: item.cantidad,
-              importe: item.producto.precio * item.cantidad,
-              fecha_creacion: fechaActual
-            }));
-
-            this.pedidoService.crearDetallePedido(detalles).subscribe({
-              next: () => {
-                this.carritoService.vaciar(); // limpiar carrito
-                this.getListCarrito(); // actualizar vista
-                alert('Pedido procesado correctamente. ¡Gracias por tu compra!');
-              },
-              error: () => {
-                alert('Error al guardar los detalles del pedido.');
-              }
-            });
-          },
-          error: () => {
-            alert('Error al crear el pedido.');
+        next: (res) => {
+          const initPoint = res.init_point;
+          if (!initPoint) {
+            alert('No se pudo obtener el enlace de pago.');
+            return;
           }
-        });
-      },
-      error: (err) => {
-        console.error("Error creando preferencia:", err);
-        alert(JSON.stringify(err.error));
-      }
-    });
+
+          // Paso 2: abrir ventana de pago
+          const pagoVentana = window.open(initPoint, '_blank');
+          if (!pagoVentana) {
+            alert('Permita ventanas emergentes para completar el pago.');
+            return;
+          }
+
+          // Paso 3: solo si el pago se completa, crear pedido y detalles
+          // Simulación: en entorno real usarías Webhooks/IPN
+          // Aquí asumimos que si se abrió, se paga (solo para test)
+
+          const pedido: Pedido = {
+            id: 0,
+            user_id: this.userId,
+            servicio_id: this.listCarrito[0].producto.id, // opcional si se guarda en detalles
+            numero_pedido: this.numeroPedido,
+            monto_total: this.carritoService.totalConImpuestos(),
+            estado: 'pendiente',
+            fecha_creacion: fechaActual,
+            direccion_entrega: this.direccion,
+            email_usuario: this.userEmail,
+          };
+
+          this.pedidoService.crearPedido(pedido).subscribe({
+            next: (res) => {
+              const pedido_id = res.id || res.pedido_id;
+              const detalles: DetallePedido[] = this.listCarrito.map(item => ({
+                pedido_id,
+                servicio_id: item.producto.id,
+                cantidad: item.cantidad,
+                importe: item.producto.precio * item.cantidad,
+                fecha_creacion: fechaActual
+              }));
+
+              this.pedidoService.crearDetallePedido(detalles).subscribe({
+                next: () => {
+                  this.carritoService.vaciar(); // limpiar carrito
+                  this.getListCarrito(); // actualizar vista
+                  alert('Pedido procesado correctamente. ¡Gracias por tu compra!');
+                },
+                error: () => {
+                  alert('Error al guardar los detalles del pedido.');
+                }
+              });
+            },
+            error: () => {
+              alert('Error al crear el pedido.');
+            }
+          });
+        },
+        error: (err) => {
+          console.error("Error creando preferencia:", err);
+          alert(JSON.stringify(err.error));
+        }
+      });
   }
 }
